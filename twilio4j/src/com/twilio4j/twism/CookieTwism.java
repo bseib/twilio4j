@@ -1,8 +1,26 @@
+/*
+ * Copyright 2011 broc.seib@gentomi.com
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.twilio4j.twism;
 
 import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -11,7 +29,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.twilio4j.util.Base64;
-import com.twilio4j.util.Digest;
 
 public class CookieTwism {
 	
@@ -68,7 +85,7 @@ public class CookieTwism {
 		// compute MAC and place it at the front of the payload. It will be
 		// simpler to decode this way -- just and indexOf("|") and recompute
 		// the checksum from the remaining string.
-		String mac = Digest.hexHashSHA1(buf.toString() + SECRET_HASH_INGREDIENT);
+		String mac = hexHashSHA1(buf.toString() + SECRET_HASH_INGREDIENT);
 //		System.out.println("mac="+mac);
 		buf.insert(0, mac);
 		return buf.toString();
@@ -83,7 +100,7 @@ public class CookieTwism {
 			throw new CookieTamperedException("invalid cookie payload: " + this.cookiePayload);
 		}
 		String macReceived = this.cookiePayload.substring(0, pipe1);
-		String macComputed = Digest.hexHashSHA1(this.cookiePayload.substring(pipe1) + SECRET_HASH_INGREDIENT);
+		String macComputed = hexHashSHA1(this.cookiePayload.substring(pipe1) + SECRET_HASH_INGREDIENT);
 		if ( ! macReceived.equals(macComputed) ) {
 			throw new CookieTamperedException("invalid cookie.");
 		}
@@ -144,6 +161,21 @@ public class CookieTwism {
 			// Damn that's a poor API decision.
 			// Just give me a URLEncoder.encodeUTF8() function!!!
 			throw new RuntimeException();
+		}
+	}
+	
+	private String hexHashSHA1(String phrase) {
+		byte[] phraseBytes = phrase.getBytes();
+		try {
+			MessageDigest hasher = MessageDigest.getInstance("SHA");
+			hasher.reset();
+			hasher.update(phraseBytes);
+			BigInteger digest = new BigInteger(1, hasher.digest());
+			return digest.toString(16);
+		}
+		catch (NoSuchAlgorithmException e) {
+			// life is really bad if we get here.
+			throw new RuntimeException(e);
 		}
 	}
 

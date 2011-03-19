@@ -1,6 +1,15 @@
 package com.twilio4j.util;
 
-/* I repackaged this class from subetha project. bseib */
+/* 
+ * The licensing is different for this file.
+ * 
+ * I repackaged this class from the subetha project. I *really* don't like external
+ * dependencies. Adding a library to your project should be easy and not require
+ * hunting down additional external libs. So I opted to copy-and-paste this class
+ * directly into my code base. It is a good implementation of Base64.
+ *  
+ * broc.seib@gentomi.com
+ */
 
 import java.util.Arrays;
 
