@@ -9,6 +9,21 @@ import com.twilio4j.twism.TwilioStateMachine;
 
 import static com.twilio4j.twism.eg.VoiceRecordState.*;
 
+/*
+ * Copyright 2011 broc.seib@gentomi.com
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 public class VoiceRecordStateMachine extends TwilioStateMachine<VoiceRecordState> {
 	private static final long serialVersionUID = 1L;
 	
@@ -49,25 +64,6 @@ public class VoiceRecordStateMachine extends TwilioStateMachine<VoiceRecordState
 				record().finishOnKeyHash().maxLength(120).action(H_REVIEW_MESSAGE)
 			)
 		);
-		
-//		handler(H_REVIEW_MESSAGE).respondsWith(new TwilioHandler() {
-//			@Override
-//			public TwiML getTwiML(TwilioParameters params) {
-//				RecordParameters rp = params.Record();
-//				if ( rp.isHangup() ) {
-//					doAbandonedCallCleanup();
-//					return hangup();
-//				} else {
-//					String recordingUrl = rp.getRecordingUrl();
-//					params.getUserParams().put(U_RECORDING_URL, recordingUrl); // save the recording url for another state.
-//					return gather(
-//						say("Press 1 or 2.").voiceWOMAN()
-//					)
-//					.numDigits(1)
-//					.action(H_REVIEW_MESSAGE_CHOICE);
-//				}
-//			}
-//		});
 		
 		handler(H_REVIEW_MESSAGE).respondsWith(new TwilioHandler() {
 			@Override
