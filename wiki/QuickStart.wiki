@@ -101,3 +101,11 @@ Example:
 		<url-pattern>/ngs/*</url-pattern>
 	</servlet-mapping>
 }}}
+
+== 4) Point your Twilio voice handler to your new servlet ==
+
+I.e., from https://www.twilio.com/user/account/phone-numbers/ , edit your number and supply the url of your new servlet:
+
+{{{
+Voice URL:  http://www.yourhost.dom/ngs
+}}}
