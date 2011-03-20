@@ -1,0 +1,19 @@
+#summary How to express a Call Flow State Machine with twilio4j
+#labels Featured
+
+= Introduction =
+
+This page is mostly one image that tries to convey how you would express
+a call flow state machine with twilio4j.
+
+= Details =
+
+[http://www.gentomi.com/twilio4j/TwilioCallFlowStateMachine.png]
+
+The key points are:
+  * you define your states as an Enum in java.
+  * you extend the TwilioStateMachine<> class.
+  * in your subclass, write blocks of action code for each enum'd state.
+  * actions can be TwiML, or Java code.
+  * where TwiML expects an action URL, use an enum'd state.
+  * TwiML is expressed in pure type-safe Java.
