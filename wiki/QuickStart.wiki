@@ -1,0 +1,21 @@
+#summary The sort version of getting started with twilio4j
+#labels Featured
+
+= Introduction =
+
+Twilio4j consists of a servlet that will drive a state machine. You supply the state machine by extending the TwilioStateMachine class (which itself is a ultimately a subclass of HttpServlet). In order to create your subclass, you first need to create an Enum that enumerates all the possible states of your state machine.
+
+You will also add an entry to your web.xml file to map a servletPath to your new state machine class.
+
+
+= Details =
+
+== Create an Enum for the States ==
+
+Example:
+{{{
+public enum NumberGameState {
+	PICK_NUMBER,
+	CHECK_NUMBER,
+}
+}}}
