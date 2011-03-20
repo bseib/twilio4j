@@ -19,7 +19,7 @@ import com.twilio4j.twism.Method;
 
 public class Sms<E extends Enum<?>> extends TwiML {
 
-	private String textBody;
+	private String message;
 	private String to;
 	private String from; // TODO to and from *could* have user input that needs escaped so that it doesn't break the twiml parsing. don't hook it up to unvalidated user input!
 	private E action;
@@ -35,12 +35,12 @@ public class Sms<E extends Enum<?>> extends TwiML {
 		if ( method != null ) { buf.append(" method=\"").append(method.name()).append("\""); }
 		if ( statusCallback != null ) { buf.append(" statusCallback=\"").append(baseUrl).append(statusCallback.name()).append("\""); }
 		buf.append('>');
-		buf.append(escape(textBody));
+		buf.append(escape(message));
 		buf.append("</Sms>");
 	}
 
-	public Sms(String textBody) {
-		this.textBody = textBody;
+	public Sms(String message) {
+		this.message = message;
 	}
 	
 	public Sms<E> to(String to) {
@@ -71,7 +71,7 @@ public class Sms<E extends Enum<?>> extends TwiML {
 	}
 
 	public String getTextBody() {
-		return textBody;
+		return message;
 	}
 	public String getTo() {
 		return to;

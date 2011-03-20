@@ -1,19 +1,20 @@
 package com.twilio4j.util;
 
-/* 
- * The licensing is different for this file.
- * 
- * I repackaged this class from the subetha project. I *really* don't like external
- * dependencies. Adding a library to your project should be easy and not require
- * hunting down additional external libs. So I opted to copy-and-paste this class
- * directly into my code base. It is a good implementation of Base64.
- *  
- * broc.seib@gentomi.com
- */
-
 import java.util.Arrays;
 
-/** A very fast and memory efficient class to encode and decode to and from BASE64 in full accordance
+/**
+ * This class was repackaged from the subetha project. I *really* don't like external
+ * dependencies. Adding a library to your project should be easy and not require
+ * hunting down additional external libs. So I opted to copy-and-paste this class
+ * directly into the code base.
+ * 
+ * This is a very good implementation of Base64.
+ *  
+ * broc.seib@gentomi.com
+ * 
+ * ~~~~~~~~
+ * 
+ * A very fast and memory efficient class to encode and decode to and from BASE64 in full accordance
  * with RFC 2045.<br><br>
  * On Windows XP sp1 with 1.4.2_04 and later ;), this encoder and decoder is about 10 times faster
  * on small arrays (10 - 1000 bytes) and 2-3 times as fast on larger arrays (10000 - 1000000 bytes)

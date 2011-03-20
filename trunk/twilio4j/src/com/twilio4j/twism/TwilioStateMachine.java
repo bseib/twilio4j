@@ -36,14 +36,82 @@ import com.twilio4j.twiml.Say;
 import com.twilio4j.twiml.Sms;
 import com.twilio4j.twiml.TwiML;
 
+/**
+ * <p>TwilioStateMachine is the class you need to extend in order to create your own call flow
+ * state machine. First you must create an enumerated type that represents all the states of
+ * your machine. This enum is used to "type" the TwilioStateMachine when you extend it.</p>
+ * 
+ * <p>You don't override any member functions in your subclass. Instead, you just supply a
+ * constructor, where you repeatedly call handler() to populate your state machine. And
+ * For each hander(), you call respondsWith() and supply straight TwiML statements, or
+ * a code block if you need to supply java code plus TwiML.</p>
+ *
+ * <p>Example:</p>
+ * <code>
+ * <pre>
+import com.twilio4j.twiml.TwiML;
+import com.twilio4j.twism.TwilioParameters;
+import com.twilio4j.twism.TwilioStateMachine;
 
+import static com.twilio4j.twism.eg.NumberGameState.*;
+
+public class NumberGameStateMachine extends TwilioStateMachine<NumberGameState> {
+	private static final long serialVersionUID = 1L;
+	
+	public NumberGameStateMachine() {
+		handler(PICK_NUMBER).respondsWith(
+			gather(
+				say("pick a number between zero and nine.")
+			)
+			.action(CHECK_NUMBER)
+			.numDigits(1)
+		);
+		handler(CHECK_NUMBER).respondsWith(new TwilioHandler() {
+			public TwiML getTwiML(TwilioParameters params) {
+				char digit = params.Gather().getDigits().charAt(0);
+				if ( digit == '5' ) {
+					return say("You win! Goodbye.");
+				} else if ( digit < '5' ) {
+					return gather(
+						say("Pick again, higher.")
+					)
+					.action(CHECK_NUMBER)
+					.numDigits(1);
+				} else {
+					return gather(
+						say("Pick again, lower.")
+					)
+					.action(CHECK_NUMBER)
+					.numDigits(1);
+				}
+			}
+		});
+	}
+
+	public NumberGameState getInitialState() {
+		return PICK_NUMBER;
+	}
+	public NumberGameState lookupState(String pathInfo) {
+		return NumberGameState.valueOf(pathInfo);
+	}
+	public String getFortyCharacterSecret() {
+		return "3440e0fa2eae0a28e5dc58d76793eb151c19acf7";
+	}
+}
+ * </pre>
+ * </code>
+ * 
+ * @author broc.seib@gentomi.com
+ *
+ * @param <E> Your enum that declares all states in your state machine. 
+ */
 abstract public class TwilioStateMachine<E extends Enum<?>> extends TwilioStateMachineServlet {
 	private static final long serialVersionUID = 1L;
 	
 	final static private Logger logger = Logger.getLogger(TwilioStateMachine.class.getSimpleName());
 	
 	@Override
-	protected String advanceState(String pathInfo, TwilioParameters tp) throws ServletException {
+	public String advanceState(String pathInfo, TwilioParameters tp) throws ServletException {
 		// return twiml from handler, or return null if it is just a callback.
 		// first find out what state is desired.
 		E state;
@@ -82,28 +150,141 @@ abstract public class TwilioStateMachine<E extends Enum<?>> extends TwilioStateM
 		}
 	}
 
-	abstract protected E getInitialState();
-	abstract protected E lookupState(String pathInfo);
+	/**
+	 * <p>Your state machine class must specify which enumerated type represents
+	 * the initial state of the state machine. This is the state that will be
+	 * entered when a call is first connected.</p>
+	 * 
+	 * <p>Note: in the web.xml suppose you map the servlet path /t/* to your state
+	 * machine servlet. Upon the very first call, Twilio will invoke the servlet
+	 * with /t and therefore will need to lookup the initial state, so that it may
+	 * behave just as if the servlet were invoked as /t/INITIAL_STATE etc.</p>
+	 * 
+	 * @return E enumerated type that represents the initial state.
+	 */
+	abstract public E getInitialState();
+	
+	/**
+	 * <p>The content of the url beyond the servletPath will exactly match the name
+	 * of the enumerated type. That string will be passed to you so that you can look
+	 * it up in your enumerated type and return us your official enumerated type. We'd
+	 * do it ourselves, but we can't invoke a static function on a Generic type.</p>
+	 * 
+	 * <p>Just return this one-liner for us:  YourEnum.valueOf(pathInfo);</p>
+	 * 
+	 * @param pathInfo
+	 * @return E enumerated type that corresponds to the current url.
+	 */
+	abstract public E lookupState(String pathInfo);
 
 	
+	/**
+	 * <p>A TwilioHandler is used execute some java code and return TwiML. You are passed the
+	 * TwilioParameters object, giving you access to userParams, which can be modified
+	 * and its state will be preserved in a cookie to Twilio for the duration of the
+	 * current phone call.</p>
+	 * 
+	 * @author broc.seib@gentomi.com
+	 */
 	public interface TwilioHandler {
+		/**
+		 * getTwiML() is called by the state machine driver to advance the state of the state machine.
+		 * You have the opportunity to execute some java code, examine state information that you
+		 * set yourself in the userParams (of the TwilioParams), or examine parameters passed from
+		 * Twilio fromthe previous state, or even access the raw HttpServletRequest and
+		 * HttpServletResponse if really needed. You can also modify the userParams hash map and
+		 * your changes will be saved in an outbound cookie to Twilio.
+		 * 
+		 * @param params You are passed the
+		 * TwilioParameters object, giving you access to userParams, which can be modified
+		 * and its state will be preserved in a cookie to Twilio for the duration of the
+		 * current phone call.
+		 * @return This block of code should return a TwiML document for the phone call
+		 * to consume next.
+		 */
 		public TwiML getTwiML(TwilioParameters params);
 	}
+
+	/**
+	 * <p>A TwilioCallback is used only to execute some java code, and *not* return TwiML.
+	 * Just like a TwilioHandler, you are passed the TwilioParameters object, giving you access to
+	 * userParams, which can be modified and its state will be preserved in a cookie to Twilio.</p>
+	 * 
+	 * @author broc.seib@gentomi.com
+	 */
 	public interface TwilioCallback {
+		/**
+		 * execute() is called by any of the various "callbacks" that you can employ with
+		 * Twilio. These are meant as one-way callbacks, i.e. you get a notification along with
+		 * parameters, and you get to execute some code, but you don't send back any TwiML.
+		 * In fact there may not even be a call in progress when some Twilio callbacks are made.
+		 * 
+		 * @param params You are passed the
+		 * TwilioParameters object, giving you access to userParams, which can be modified
+		 * and its state will be preserved in a cookie to Twilio for the duration of the
+		 * current phone call.
+		 */
 		public void execute(TwilioParameters params);
 	}
 	
 	private HashMap<E, TwilioHandler> handlerMap = new HashMap<E, TwilioHandler>();
 	private HashMap<E, TwilioCallback> callbackMap = new HashMap<E, TwilioCallback>();
 
+	/**
+	 * <p>hander() is how you declare a handler for a particular enumerated state. You
+	 * should call this function repeatedly in the constructor of your state machine
+	 * class. Chain a .respondsWith() function to this call to specify the action to
+	 * take for this state.</p>
+	 * 
+	 * <p>Example:</p>
+	 * <code>
+	 * <pre>
+		handler(PICK_NUMBER).respondsWith(
+			gather(
+				say("pick a number between zero and nine.")
+			)
+			.action(CHECK_NUMBER)
+			.numDigits(1)
+		);
+	 * </pre>
+	 * </code>
+	 * 
+	 * @param state This is the enumerated state for which you want to add an action.
+	 * @return This returns a RespondsWith class, which is just eye-candy so that you can
+	 * use a builder-style chaining of methods, namely a .respondsWith() method. 
+	 */
 	public RespondsWith<E> handler(E state) {
 		return new RespondsWith<E>(state, handlerMap);
 	}
 
+	/**
+	 * <p>callback() is how you declare a callback function for a particular enumerated state. You
+	 * should call this function in the constructor of your state machine class for each enumerated
+	 * state that represents a callback from Twilio. Chain a .executes() function to this call
+	 * to specify the action to take for this state.</p>
+	 * 
+	 * <p>Example:</p>
+	 * <code>
+	 * <pre>
+		callback(STATUS_CALLBACK).executes(new TwilioCallback() {
+			public void execute(TwilioParameters params) {
+				doSomethingInterestingHere();
+			}
+		});
+	 * </pre>
+	 * </code>
+	 * 
+	 * @param state This is the enumerated state for which you want to add an action.
+	 * @return This returns a RespondsWith class, which is just eye-candy so that you can
+	 * use a builder-style chaining of methods, namely a .respondsWith() method. 
+	 */
 	public Executes<E> callback(E state) {
 		return new Executes<E>(state, callbackMap);
 	}
 
+	/**
+	 * You'll never use this class directly.
+	 */
 	public class RespondsWith<EE> {
 		private EE state;
 		private HashMap<EE, TwilioHandler> mapp; 
@@ -111,9 +292,20 @@ abstract public class TwilioStateMachine<E extends Enum<?>> extends TwilioStateM
 			this.state = state;
 			this.mapp = mapp;
 		}
+		/**
+		 * Specify a block of Java code that will execute for the corresponding handler.
+		 * This block of code will ultimately need to return some TwiML.
+		 * @param code
+		 */
 		public void respondsWith(TwilioHandler code) {
 			mapp.put(state, code);
 		}
+		/**
+		 * Specify just a block of TwiML to be passed back. You write the block of
+		 * TwiML by just writing 'gather()', 'say()', etc. which are functions that
+		 * return type TwiML.
+		 * @param twiml
+		 */
 		public void respondsWith(final TwiML twiml) {
 			mapp.put(state, new TwilioHandler() {
 				@Override
@@ -124,6 +316,9 @@ abstract public class TwilioStateMachine<E extends Enum<?>> extends TwilioStateM
 		}
 	}
 
+	/**
+	 * You'll never use this class directly.
+	 */
 	public class Executes<EEE> {
 		private EEE state;
 		private HashMap<EEE, TwilioCallback> callbackMapp; 
@@ -142,9 +337,35 @@ abstract public class TwilioStateMachine<E extends Enum<?>> extends TwilioStateM
 	 * Attributes of each verb can be chained on in a "builder" style.
 	 * Only those verbs that have an "action" need generic typing (since action is the enum state)
 	 */
-	final public TwiML twiml(TwiML... twiml) {
+	/**
+	 * <p>Use response() to construct a block of TwiML. Pass it a comma separated list of
+	 * valid TwiML functions, i.e., say(), play(), gather(), record(), sms(), dial(),
+	 * hangup(), reject(), pause().</p>
+	 * 
+	 * <p>Example:</p>
+	 * <code>
+	 * <pre>
+	handler(HELLO).respondsWith(
+		response(
+			say("listen to this!"),
+			play("http://somewhere/ipanema.mp3"),
+			say("that was fun!"),
+			hangup()
+		)
+	);
+	 * </pre>
+	 * </code>
+	 * 
+	 */
+	final public TwiML response(TwiML... twiml) {
 		return new TwiML(twiml);
 	}
+	
+	/**
+	 * 
+	 * @param phrase
+	 * @return
+	 */
 	final public Say say(String phrase) {
 		return new Say(phrase);
 	}
@@ -157,8 +378,8 @@ abstract public class TwilioStateMachine<E extends Enum<?>> extends TwilioStateM
 	final public Record<E> record() {
 		return new Record<E>();
 	}
-	final public Sms<E> sms(String textBody) {
-		return new Sms<E>(textBody);
+	final public Sms<E> sms(String message) {
+		return new Sms<E>(message);
 	}
 	final public Dial<E> dial(NestInDial... nested) {
 		return new Dial<E>(nested);

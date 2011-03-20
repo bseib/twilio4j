@@ -17,21 +17,26 @@
 package com.twilio4j.twism;
 
 import java.io.IOException;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * TwilioStateMachineServlet accepts HTTP GET and POST connections from Twilio,
+ * <p>TwilioStateMachineServlet accepts HTTP GET and POST connections from Twilio,
  * and advances a phone call through the various states of a state machine.
- * The states are represented by a Java Enum, and their corresponding actions
- * are either java code, TwiML, or a combination of both.
+ * Each possible state is represented by an enumerated type which you declare. The
+ * corresponding actions for each enumeration can be java code, or TwiML, or a
+ * combination of both.</p>
+ * 
+ * <p>You will not use this class directly. You should create a subclass of
+ * TwilioStateMachine to create your call flow state machine. You should create
+ * an enumerated type to represent all the states of your machine. Those two classes
+ * are the minimum needed.
+ * </p> 
  * 
  * In twilio4j, the TwiML was designed such that it can be expressed in a
  * declarative style, completely in Java code. Virtually everything is type
@@ -45,7 +50,7 @@ import javax.servlet.http.HttpServletResponse;
  * machine, and take care of mapping states to URLs, and persisting user parameters
  * into a cookie.
  * 
- * @author Broc Seib broc.seib@gentomi.com
+ * @author broc.seib@gentomi.com
  * 
  */
 abstract public class TwilioStateMachineServlet extends HttpServlet {
@@ -73,7 +78,7 @@ abstract public class TwilioStateMachineServlet extends HttpServlet {
 		try {
 			HashMap<String, String> userParams;
 			CookieTwism cookieIn = CookieTwism.checkForCookie(req, SECRET);
-			printTestCookie(req);
+//			printTestCookie(req);
 			if ( cookieIn == null ) {
 				// none set yet. That means this is the first visit and user params are empty.
 				logger.info("no cookie yet");
@@ -93,40 +98,40 @@ abstract public class TwilioStateMachineServlet extends HttpServlet {
 			logger.info("twiml returned: " + twiml);
 			if ( twiml != null ) {
 				resp.setContentType("text/xml");
-//				CookieTwism cookieOut = new CookieTwism(tp.getUserParams());
-//				CookieTwism.setHttpCookie(resp, cookieOut, SECRET);
-				resp.addCookie(createTestCookie("test payload " + new Date().toString()));
+				CookieTwism cookieOut = new CookieTwism(tp.getUserParams());
+				CookieTwism.setHttpCookie(resp, cookieOut, SECRET);
+//				resp.addCookie(createTestCookie("test payload " + new Date().toString()));
 				resp.setHeader("Cache-Control", "no-cache");
 				resp.getWriter().println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
 				resp.getWriter().println(twiml);
 			} else {
 				resp.setStatus(HttpServletResponse.SC_OK);
 			}
-			resp.flushBuffer(); // twilio didn't receive all my document
+			resp.flushBuffer(); // twilio didn't receive all my document???
 		}
 		catch (CookieTamperedException e) {
 			throw new ServletException(e.getMessage());
 		}
 	}
 	
-	private Cookie createTestCookie(String payload) {
-		Cookie c = new Cookie("cookie_name", payload);
-		c.setMaxAge(-1); // will not be persisted. will be deleted when browser exits
-		c.setPath("/"); // this cookie is good everywhere on the site
-		return c;
-	}
-	
-	private void printTestCookie(HttpServletRequest req) {
-		Cookie[] cookies = req.getCookies();
-		if ( cookies != null ) {
-			for ( Cookie c : cookies ) {
-				if ( "cookie_name".equals(c.getName()) ) {
-					logger.info("test cookie says: " + c.getValue());
-					break;
-				}
-			}
-		}
-	}
+//	private Cookie createTestCookie(String payload) {
+//		Cookie c = new Cookie("cookie_name", payload);
+//		c.setMaxAge(-1); // will not be persisted. will be deleted when browser exits
+//		c.setPath("/"); // this cookie is good everywhere on the site
+//		return c;
+//	}
+//	
+//	private void printTestCookie(HttpServletRequest req) {
+//		Cookie[] cookies = req.getCookies();
+//		if ( cookies != null ) {
+//			for ( Cookie c : cookies ) {
+//				if ( "cookie_name".equals(c.getName()) ) {
+//					logger.info("test cookie says: " + c.getValue());
+//					break;
+//				}
+//			}
+//		}
+//	}
 	
 	/**
 	 * This function provides a constant which is used to digitally sign the payload
@@ -153,7 +158,7 @@ abstract public class TwilioStateMachineServlet extends HttpServlet {
 	 * 
 	 * So just return a long string that is a "random" bunch of characters.
 	 */
-	abstract protected String getFortyCharacterSecret();
+	abstract public String getFortyCharacterSecret();
 	
 	/**
 	 * advanceState() asks the implementing class to move us into the next state of the state
@@ -171,6 +176,6 @@ abstract public class TwilioStateMachineServlet extends HttpServlet {
 	 *         returned if no further action is needed to be taken by the twilio client.
 	 * @throws ServletException  if something really bad happens.
 	 */
-	abstract protected String advanceState(String pathInfo, TwilioParameters twilioParameters) throws ServletException;
+	abstract public String advanceState(String pathInfo, TwilioParameters twilioParameters) throws ServletException;
 	
 }
