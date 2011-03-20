@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.twilio4j.twism;
 
 import java.io.IOException;
@@ -26,6 +27,27 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * TwilioStateMachineServlet accepts HTTP GET and POST connections from Twilio,
+ * and advances a phone call through the various states of a state machine.
+ * The states are represented by a Java Enum, and their corresponding actions
+ * are either java code, TwiML, or a combination of both.
+ * 
+ * In twilio4j, the TwiML was designed such that it can be expressed in a
+ * declarative style, completely in Java code. Virtually everything is type
+ * safe, so you will know at compile time if you have well formed TwiML. You
+ * might also benefit from auto-completion in your IDE, speeding up the process
+ * of getting the TwiML syntax right.
+ * 
+ * All "actions" and "callbacks" in the TwiML are supplied as the Enum that
+ * represents the next state. This lets your code just focus on the TwiML
+ * actions and the flow of the state machine. This servlet will drive the state
+ * machine, and take care of mapping states to URLs, and persisting user parameters
+ * into a cookie.
+ * 
+ * @author Broc Seib broc.seib@gentomi.com
+ * 
+ */
 abstract public class TwilioStateMachineServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
@@ -106,8 +128,49 @@ abstract public class TwilioStateMachineServlet extends HttpServlet {
 		}
 	}
 	
-
+	/**
+	 * This function provides a constant which is used to digitally sign the payload
+	 * of a cookie. Here is the background:
+	 * 
+	 * A HashMap (called userParams) is persisted in a cookie after each POST or GET, for the
+	 * duration of the phone call. Anytime Twilio makes a POST or GET, you are passed these
+	 * userParams and have the opportunity to alter their state. This servlet will take care
+	 * of writing that state back out as a cookie.
+	 * 
+	 * The "forty character secret" doesn't have to be forty characters, but should be on that
+	 * order of magnitude in length. How it is used is this: The userParams hash map is flattened
+	 * into a string with proper escaping, etc. This flattened value is concatenated with the
+	 * secret, and a SHA1 hash is made of it. Then the flattened user params and the SHA1 hash
+	 * become the payload of the cookie. Whenever the cookie comes back later, the payload is
+	 * checked to know that is was not tampered with.
+	 * 
+	 * Without this measure, it could be possible for a rogue HTTP client to connect to an
+	 * intermediate state in your state machine and invoke an action that you did not wish to
+	 * make "public". Note, this measure does not prevent any rogue clients from sending you
+	 * a POST or GET. It will only ensure that the userParams are ones that you intended to
+	 * set, and that they are not forged. It is still up to you to have an initial state use
+	 * a Gather to authorize entry into the state machine.
+	 * 
+	 * So just return a long string that is a "random" bunch of characters.
+	 */
 	abstract protected String getFortyCharacterSecret();
-	abstract protected String advanceState(String pathInfo, TwilioParameters tp) throws ServletException;
+	
+	/**
+	 * advanceState() asks the implementing class to move us into the next state of the state
+	 * machine, given the path from the URL (which contains the Enum state), and the user
+	 * parameters (the HashMap<String, String>). It is expected to return a string of TwiML
+	 * which will be passed back to the Twilio client, or return null if the client is not
+	 * to take further action (i.e. in the case of a Twilio callback function).
+	 * 
+	 * @param pathInfo is the path from the url, everything following the servlet path.
+	 * @param twilioParameters is just a wrapper for the userParams, which is a
+	 *        HashMap<String, String>. But twilioParameters also carries a copy of the
+	 *        HttpServletRequest and HttpServletResponse, just in case the raw stuff is needed.
+	 *        You never know.
+	 * @return String  TwiML is returned to be passed back to the Twilio client, or null may be
+	 *         returned if no further action is needed to be taken by the twilio client.
+	 * @throws ServletException  if something really bad happens.
+	 */
+	abstract protected String advanceState(String pathInfo, TwilioParameters twilioParameters) throws ServletException;
 	
 }

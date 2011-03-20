@@ -1,14 +1,3 @@
-package com.twilio4j.twism.eg;
-
-import java.util.logging.Logger;
-
-import com.twilio4j.twiml.TwiML;
-import com.twilio4j.twism.RecordParameters;
-import com.twilio4j.twism.TwilioParameters;
-import com.twilio4j.twism.TwilioStateMachine;
-
-import static com.twilio4j.twism.eg.VoiceRecordState.*;
-
 /*
  * Copyright 2011 broc.seib@gentomi.com
  *
@@ -24,6 +13,18 @@ import static com.twilio4j.twism.eg.VoiceRecordState.*;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.twilio4j.twism.eg;
+
+import java.util.logging.Logger;
+
+import com.twilio4j.twiml.TwiML;
+import com.twilio4j.twism.RecordParameters;
+import com.twilio4j.twism.TwilioParameters;
+import com.twilio4j.twism.TwilioStateMachine;
+
+import static com.twilio4j.twism.eg.VoiceRecordState.*;
+
+
 public class VoiceRecordStateMachine extends TwilioStateMachine<VoiceRecordState> {
 	private static final long serialVersionUID = 1L;
 	
