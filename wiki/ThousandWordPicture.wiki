@@ -8,7 +8,7 @@ a call flow state machine with twilio4j.
 
 = Details =
 
-[http://www.gentomi.com/twilio4j/TwilioCallFlowStateMachine.png]
+[http://www.gentomi.com/twilio4j/TwilioCallFlowStateMachine.png http://www.gentomi.com/twilio4j/TwilioCallFlowStateMachine.png]
 
 The key points are:
   * you define your states as an Enum in java.
