@@ -109,3 +109,5 @@ I.e., from https://www.twilio.com/user/account/phone-numbers/ , edit your number
 {{{
 Voice URL:  http://www.yourhost.dom/ngs
 }}}
+
+== 5) Call your Twilio phone number and try it out! ==
