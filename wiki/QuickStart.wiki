@@ -1,4 +1,4 @@
-#summary The sort version of getting started with twilio4j
+#summary The short version of getting started with twilio4j
 #labels Featured
 
 = Introduction =
