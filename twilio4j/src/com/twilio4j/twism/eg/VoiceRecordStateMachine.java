@@ -51,7 +51,7 @@ public class VoiceRecordStateMachine extends TwilioStateMachine<VoiceRecordState
 				} else {
 					// increment number of attempts made
 					// if too many, then go to a bailout state
-					return twiml(
+					return response(
 						say("That call in code is not valid. You may try again."),
 						redirect(H_GATHER_CALL_IN_CODE)
 					);
@@ -60,7 +60,7 @@ public class VoiceRecordStateMachine extends TwilioStateMachine<VoiceRecordState
 		});
 		
 		handler(H_RECORD_MESSAGE).respondsWith(
-			twiml(
+			response(
 				say("After the beep, record your outbound message. Press pound when done.").voiceWOMAN(),
 				record().finishOnKeyHash().maxLength(120).action(H_REVIEW_MESSAGE)
 			)
@@ -140,17 +140,17 @@ public class VoiceRecordStateMachine extends TwilioStateMachine<VoiceRecordState
 	 */
 
 	@Override
-	protected String getFortyCharacterSecret() {
+	public String getFortyCharacterSecret() {
 		return "3440e0fa2eae0a28e5dc58d76793eb151c19acf7";
 	}
 
 	@Override
-	protected VoiceRecordState getInitialState() {
+	public VoiceRecordState getInitialState() {
 		return H_GATHER_CALL_IN_CODE;
 	}
 
 	@Override
-	protected VoiceRecordState lookupState(String pathInfo) {
+	public VoiceRecordState lookupState(String pathInfo) {
 		return VoiceRecordState.valueOf(pathInfo);
 	}
 
