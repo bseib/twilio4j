@@ -17,6 +17,15 @@ package com.twilio4j.twiml;
 
 import com.twilio4j.twism.Method;
 
+/**
+ * This class directly reflects the Dial verb documented at
+ * http://www.twilio.com/docs/api/twiml/dial
+ * 
+ * All of the descriptions included in these javadoc comments
+ * come directly from the twilio website.
+ * 
+ * @author broc.seib@gentomi.com
+ */
 public class Dial<E extends Enum<?>> extends TwiML {
 
 	private NestInDial[] nestedNouns;
@@ -28,6 +37,10 @@ public class Dial<E extends Enum<?>> extends TwiML {
 	private Integer timeLimit;
 	private String callerId;
 	
+	/**
+	 * Converts this object into XML. This function is normally called by the state
+	 * machine servlet and not called directly by you.
+	 */
 	@Override
 	public void toXml(StringBuilder buf, String baseUrl) {
 		buf.append("<Dial");

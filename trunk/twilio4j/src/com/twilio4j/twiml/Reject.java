@@ -16,6 +16,15 @@
 package com.twilio4j.twiml;
 
 
+/**
+ * This class directly reflects the Reject verb documented at
+ * http://www.twilio.com/docs/api/twiml/reject
+ * 
+ * All of the descriptions included in these javadoc comments
+ * come directly from the twilio website.
+ * 
+ * @author broc.seib@gentomi.com
+ */
 public class Reject extends TwiML {
 
 	public enum Reason {
@@ -24,6 +33,10 @@ public class Reject extends TwiML {
 	
 	private Reason reason;
 	
+	/**
+	 * Converts this object into XML. This function is normally called by the state
+	 * machine servlet and not called directly by you.
+	 */
 	@Override
 	public void toXml(StringBuilder buf, String baseUrl) {
 		buf.append("<Reject");

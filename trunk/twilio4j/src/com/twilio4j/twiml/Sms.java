@@ -17,6 +17,20 @@ package com.twilio4j.twiml;
 
 import com.twilio4j.twism.Method;
 
+/**
+ * This class directly reflects the Sms verb documented at
+ * http://www.twilio.com/docs/api/twiml/sms  AND
+ * http://www.twilio.com/docs/api/twiml/sms/sms
+ * 
+ * Although these are technically different, they really only
+ * differ in the request parameters that it can receive. It turns
+ * out that a single class can represent them both.
+ * 
+ * All of the descriptions included in these javadoc comments
+ * come directly from the twilio website.
+ * 
+ * @author broc.seib@gentomi.com
+ */
 public class Sms<E extends Enum<?>> extends TwiML {
 
 	private String message;
@@ -26,6 +40,10 @@ public class Sms<E extends Enum<?>> extends TwiML {
 	private Method method;
 	private E statusCallback;
 	
+	/**
+	 * Converts this object into XML. This function is normally called by the state
+	 * machine servlet and not called directly by you.
+	 */
 	@Override
 	public void toXml(StringBuilder buf, String baseUrl) {
 		buf.append("<Sms");

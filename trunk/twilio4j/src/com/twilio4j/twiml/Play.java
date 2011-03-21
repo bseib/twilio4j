@@ -16,11 +16,24 @@
 package com.twilio4j.twiml;
 
 
+/**
+ * This class directly reflects the Play verb documented at
+ * http://www.twilio.com/docs/api/twiml/play
+ * 
+ * All of the descriptions included in these javadoc comments
+ * come directly from the twilio website.
+ * 
+ * @author broc.seib@gentomi.com
+ */
 public class Play extends TwiML implements NestInGather {
 
 	private String audioUrl;
 	private Integer loop;
 	
+	/**
+	 * Converts this object into XML. This function is normally called by the state
+	 * machine servlet and not called directly by you.
+	 */
 	@Override
 	public void toXml(StringBuilder buf, String baseUrl) {
 		buf.append("<Play");
@@ -30,18 +43,36 @@ public class Play extends TwiML implements NestInGather {
 		buf.append("</Play>");
 	}
 	
+	/**
+	 * The <Play> verb plays an audio file back to the caller. Twilio retrieves the file from a URL that you provide.
+	 * @param audioUrl  The URL of an audio file that Twilio will retrieve and play to the caller.
+	 */
 	public Play(String audioUrl) {
 		this.audioUrl = audioUrl;
 	}
 	
+	/**
+	 * The 'loop' attribute specifies how many times the audio file is played. The default behavior is to play the
+	 * audio once. Specifying '0' will cause the the <Play> verb to loop until the call is hung up.
+	 * @param loopCount  must be >=0. default is 1.
+	 * @return Play object so more attributes may be chained.
+	 */
 	public Play loop(int loopCount) {
 		this.loop = loopCount;
 		return this;
 	}
 
+	/**
+	 * Getter for the audioUrl set in the constructor.
+	 * @return the audioUrl set in the constructor.
+	 */
 	public String getAudioUrl() {
 		return audioUrl;
 	}
+	/**
+	 * Getter for the loop attribute.
+	 * @return the loop attribute, only if it was set.
+	 */
 	public Integer getLoop() {
 		return loop;
 	}

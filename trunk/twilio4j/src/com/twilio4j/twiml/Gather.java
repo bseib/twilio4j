@@ -17,6 +17,15 @@ package com.twilio4j.twiml;
 
 import com.twilio4j.twism.Method;
 
+/**
+ * This class directly reflects the Gather verb documented at
+ * http://www.twilio.com/docs/api/twiml/gather
+ * 
+ * All of the descriptions included in these javadoc comments
+ * come directly from the twilio website.
+ * 
+ * @author broc.seib@gentomi.com
+ */
 public class Gather<E extends Enum<?>> extends TwiML {
 	
 	private NestInGather nestedVerbs[];
@@ -27,6 +36,10 @@ public class Gather<E extends Enum<?>> extends TwiML {
 	private Character finishOnKey; // TODO this *could* have user input that needs escaped so that it doesn't break the twiml parsing. don't hook it up to unvalidated user input!
 	private Integer numDigits;
 	
+	/**
+	 * Converts this object into XML. This function is normally called by the state
+	 * machine servlet and not called directly by you.
+	 */
 	@Override
 	public void toXml(StringBuilder buf, String baseUrl) {
 		buf.append("<Gather");
