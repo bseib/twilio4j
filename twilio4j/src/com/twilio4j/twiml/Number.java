@@ -15,12 +15,25 @@
  */
 package com.twilio4j.twiml;
 
+/**
+ * This class directly reflects the Number verb documented at
+ * http://www.twilio.com/docs/api/twiml/number
+ * 
+ * All of the descriptions included in these javadoc comments
+ * come directly from the twilio website.
+ * 
+ * @author broc.seib@gentomi.com
+ */
 public class Number<E extends Enum<?>> extends TwiML implements NestInDial {
 
 	private String number;
 	private String sendDigits; // TODO these two string *could* have user input that needs escaped so that it doesn't break the twiml parsing.
 	private E url;
 	
+	/**
+	 * Converts this object into XML. This function is normally called by the state
+	 * machine servlet and not called directly by you.
+	 */
 	@Override
 	public void toXml(StringBuilder buf, String baseUrl) {
 		buf.append("<Number");

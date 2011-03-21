@@ -18,11 +18,24 @@ package com.twilio4j.twiml;
 import com.twilio4j.twism.Method;
 
 
+/**
+ * This class directly reflects the Redirect verb documented at
+ * http://www.twilio.com/docs/api/twiml/redirect
+ * 
+ * All of the descriptions included in these javadoc comments
+ * come directly from the twilio website.
+ * 
+ * @author broc.seib@gentomi.com
+ */
 public class Redirect<E extends Enum<?>> extends TwiML {
 
 	private E nextState;
 	private Method method;
 	
+	/**
+	 * Converts this object into XML. This function is normally called by the state
+	 * machine servlet and not called directly by you.
+	 */
 	@Override
 	public void toXml(StringBuilder buf, String baseUrl) {
 		buf.append("<Redirect");

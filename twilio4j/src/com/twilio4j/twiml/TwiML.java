@@ -33,7 +33,11 @@ public class TwiML implements ToXML {
 		toXml(buf, baseUrl);
 		return buf.toString();
 	}
-
+	
+	/**
+	 * Converts this object into XML. This function is normally called by the state
+	 * machine servlet and not called directly by you.
+	 */
 	public void toXml(StringBuilder buf, String baseUrl) {
 		buf.append("<Response>");
 		for ( TwiML t : nested ) {
@@ -48,19 +52,5 @@ public class TwiML implements ToXML {
 		val = val.replaceAll("<", "&lt;");
 		return val;
 	}
-	
-//	public String toXML(){
-//        String xml = "<" + this.tag;
-//        for (String key : attributes.keySet()) {
-//            xml += " " + key + "=\"" + attributes.get(key) + "\"";
-//        }
-//        xml += ">";
-//        if(this.body != null)
-//            xml += this.body;
-//        for (Verb child : children){
-//            xml += child.toXML();
-//        }
-//        return xml += "</" + this.tag + ">";
-//    }
 
 }

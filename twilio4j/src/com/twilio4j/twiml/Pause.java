@@ -16,10 +16,23 @@
 package com.twilio4j.twiml;
 
 
+/**
+ * This class directly reflects the Pause verb documented at
+ * http://www.twilio.com/docs/api/twiml/pause
+ * 
+ * All of the descriptions included in these javadoc comments
+ * come directly from the twilio website.
+ * 
+ * @author broc.seib@gentomi.com
+ */
 public class Pause extends TwiML implements NestInGather {
 
 	private Integer length;
 	
+	/**
+	 * Converts this object into XML. This function is normally called by the state
+	 * machine servlet and not called directly by you.
+	 */
 	@Override
 	public void toXml(StringBuilder buf, String baseUrl) {
 		buf.append("<Pause");
