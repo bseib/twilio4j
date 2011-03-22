@@ -18,7 +18,6 @@ package com.twilio4j.twism;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -56,7 +55,7 @@ import javax.servlet.http.HttpServletResponse;
 abstract public class TwilioStateMachineServletBase extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	final static private Logger logger = Logger.getLogger(TwilioStateMachineServletBase.class.getSimpleName());
+//	final static private Logger logger = Logger.getLogger(TwilioStateMachineServletBase.class.getSimpleName());
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -81,12 +80,12 @@ abstract public class TwilioStateMachineServletBase extends HttpServlet {
 //			printTestCookie(req);
 			if ( cookieIn == null ) {
 				// none set yet. That means this is the first visit and user params are empty.
-				logger.info("no cookie yet");
+//				logger.info("no cookie yet");
 				userParams = new HashMap<String, String>();
 			} else {
-				logger.info("found existing cookie with these params:");
+//				logger.info("found existing cookie with these params:");
 				userParams = cookieIn.recoverUserParamsFromCookiePayload(SECRET);
-				for ( String k : userParams.keySet() ) { logger.info(k+"="+userParams.get(k)); }
+//				for ( String k : userParams.keySet() ) { logger.info(k+"="+userParams.get(k)); }
 			}
 			TwilioParameters tp = new TwilioParameters(req, resp, userParams);
 
@@ -95,7 +94,7 @@ abstract public class TwilioStateMachineServletBase extends HttpServlet {
 			// not return anything in the body. Of course an exception could be thrown
 			// in which case an error code response should be returned.
 			String twiml = advanceState(pathInfo, tp);
-			logger.info("twiml returned: " + twiml);
+//			logger.info("twiml returned: " + twiml);
 			if ( twiml != null ) {
 				resp.setContentType("text/xml");
 				CookieTwism cookieOut = new CookieTwism(tp.getUserParams());
