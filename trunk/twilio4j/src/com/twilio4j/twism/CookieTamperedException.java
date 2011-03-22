@@ -15,6 +15,14 @@
  */
 package com.twilio4j.twism;
 
+/**
+ * The cookie used to persist state during a call is digitally signed with a hash. Upon reading
+ * the cookie from the HTTP headers, if it cannot be checksummed properly, then this exception
+ * is thrown.
+ * 
+ * @author broc.seib@gentomi.com
+ *
+ */
 public class CookieTamperedException extends Exception {
 	private static final long serialVersionUID = 1L;
 

@@ -15,9 +15,27 @@
  */
 package com.twilio4j.twism;
 
+/**
+ * Twilio will pass the following parameters in addition to the standard TwiML Voice request parameters with its request to the 'transcribeCallback' URL of {@link Record}.
+ * 
+ * @author broc.seib@gentomi.com
+ *
+ */
 public interface TranscribeParameters {
+	/**
+	 * @return Contains the text of the transcription.
+	 */
 	public String getTranscriptionText();
+	/**
+	 * @return The status of the transcription attempt: either 'completed' or 'failed'. These are enumerated in {@link TranscriptionStatus}.
+	 */
 	public TranscriptionStatus getTranscriptionStatus();
+	/**
+	 * @return The URL for the transcription's REST API resource.
+	 */
 	public String getTranscriptionUrl();
+	/**
+	 * @return The URL for the transcription's source recording resource.
+	 */
 	public String getRecordingUrl();
 }

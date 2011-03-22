@@ -15,9 +15,27 @@
  */
 package com.twilio4j.twism;
 
+/**
+ * Twilio will pass the following parameters in addition to the standard TwiML Voice request parameters with its request to the 'action' URL of {@link Record}.
+ * 
+ * @author broc.seib@gentomi.com
+ *
+ */
 public interface RecordParameters {
+	/**
+	 * @return the URL of the recorded audio
+	 */
 	public String getRecordingUrl();
+	/**
+	 * @return the time duration of the recorded audio
+	 */
 	public int getRecordingDuration();
+	/**
+	 * @return the key (if any) pressed to end the recording or 'hangup' if the caller hung up
+	 */
 	public String getDigits();
+	/**
+	 * @return true if getDigits() is "hangup", else false.
+	 */
 	public boolean isHangup();
 }

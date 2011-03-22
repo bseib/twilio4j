@@ -15,7 +15,19 @@
  */
 package com.twilio4j.twism;
 
+/**
+ * Twilio will pass the following parameters in addition to the standard TwiML Voice request parameters with its request to the 'statusCallback' URL of {@link Sms}.
+ * 
+ * @author broc.seib@gentomi.com
+ *
+ */
 public interface SmsParameters {
+	/**
+	 * @return The Sid for the Sms message
+	 */
 	public String getSmsSid();
+	/**
+	 * @return The current status of the Sms message. Either 'sent' or 'failed'
+	 */
 	public String getSmsStatus();
 }
