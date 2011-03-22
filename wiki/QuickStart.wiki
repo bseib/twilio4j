@@ -3,7 +3,7 @@
 
 = Introduction =
 
-Twilio4j consists of a servlet that will drive a state machine. You supply the state machine by extending the TwilioStateMachine class (which itself is a ultimately a subclass of HttpServlet). In order to create your subclass, you first need to create an Enum that enumerates all the possible states of your state machine.
+Twilio4j consists of a servlet that will drive a state machine. You supply the state machine by extending the TwilioStateMachineServlet class (which itself is a ultimately a subclass of HttpServlet). In order to create your subclass, you first need to create an Enum that enumerates all the possible states of your state machine.
 
 You will also add an entry to your web.xml file to map a servletPath to your new state machine class.
 
@@ -17,23 +17,23 @@ public enum NumberGameState {
 }
 }}}
 
-== 2) Create a subclass of TwilioStateMachine ==
+== 2) Create a subclass of TwilioStateMachineServlet ==
 
-Note that your enumerated type is used to "type" the TwilioStateMachine.
+Note that your enumerated type is used to "type" the TwilioStateMachineServlet.
  
 Also note the static import to conveniently allow you to refer to the states without their classname. This is certainly not required.
 
 {{{
 import com.twilio4j.twiml.TwiML;
 import com.twilio4j.twism.TwilioParameters;
-import com.twilio4j.twism.TwilioStateMachine;
+import com.twilio4j.twism.TwilioStateMachineServlet;
 
 import static com.twilio4j.twism.eg.NumberGameState.*;
 
-public class NumberGameStateMachine extends TwilioStateMachine<NumberGameState> {
+public class NumberGameStateMachineServlet extends TwilioStateMachineServlet<NumberGameState> {
 	private static final long serialVersionUID = 1L;
 	
-	public NumberGameStateMachine() {
+	public NumberGameStateMachineServlet() {
 		handler(PICK_NUMBER).respondsWith(
 			gather(
 				say("pick a number between zero and nine.")
@@ -93,7 +93,7 @@ Example:
 		<description>Twilio Number Game Servlet</description>
 		<display-name>NumberGameServlet</display-name>
 		<servlet-name>NumberGameServlet</servlet-name>
-		<servlet-class>com.twilio4j.twism.eg.NumberGameStateMachine</servlet-class>
+		<servlet-class>com.twilio4j.twism.eg.NumberGameStateMachineServlet</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
