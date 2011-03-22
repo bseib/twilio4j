@@ -30,6 +30,16 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.twilio4j.util.Base64;
 
+/**
+ * <p>A cookie represented by {@link CookieTwism} is used to persist state during a call. It houses a HashMap called
+ * userParams. These parameters are flattened and encoded into a single string. This string is signed with a SHA1
+ * hash, whose checksum is stored in the cookie along with the flattened userParams. Upon reading the cookie from
+ * the HTTP headers, if it cannot be checksummed properly, then a {@link CookieTamperedException} is thrown.</p>
+ * 
+ * <p>You should not need to access this class</p>
+ * 
+ * @author broc.seib@gentomi.com
+ */
 public class CookieTwism {
 	
 //	final static private Logger logger = Logger.getLogger(CookieSignup.class.getSimpleName());
@@ -213,25 +223,25 @@ public class CookieTwism {
 
 	
 	// test/debug
-	public static void main(String[] args) throws CookieTamperedException {
-		final String SECRET = "aslkjghrfkjfkasjndflkjnasdfjknaskndfjsnkdfjn";
-		HashMap<String, String> up = new HashMap<String, String>();
-		CookieTwism cookie = new CookieTwism(up);
-		String encoded = cookie.encodeIntoCookiePayload(SECRET);
-		System.out.println("encoded="+encoded);
-		CookieTwism cookie2 = new CookieTwism(encoded);
-		up = cookie2.recoverUserParamsFromCookiePayload(SECRET);
-		for ( String k : up.keySet() ) { System.out.println(k+"="+up.get(k)); }
-
-		up.put("val", "http://www.blopblopblop.com/foo?this=that&otherwise=1");
-		up.put("val2", "https://www5.blopasdfblop.com/wrt?is=at&other=1");
-		CookieTwism cookie3 = new CookieTwism(up);
-		String encoded3 = cookie3.encodeIntoCookiePayload(SECRET);
-		System.out.println("encoded="+encoded3);
-		CookieTwism cookie4 = new CookieTwism(encoded3);
-		up = cookie4.recoverUserParamsFromCookiePayload(SECRET);
-		for ( String k : up.keySet() ) { System.out.println(k+"="+up.get(k)); }
-		
-	}
+//	public static void main(String[] args) throws CookieTamperedException {
+//		final String SECRET = "aslkjghrfkjfkasjndflkjnasdfjknaskndfjsnkdfjn";
+//		HashMap<String, String> up = new HashMap<String, String>();
+//		CookieTwism cookie = new CookieTwism(up);
+//		String encoded = cookie.encodeIntoCookiePayload(SECRET);
+//		System.out.println("encoded="+encoded);
+//		CookieTwism cookie2 = new CookieTwism(encoded);
+//		up = cookie2.recoverUserParamsFromCookiePayload(SECRET);
+//		for ( String k : up.keySet() ) { System.out.println(k+"="+up.get(k)); }
+//
+//		up.put("val", "http://www.blopblopblop.com/foo?this=that&otherwise=1");
+//		up.put("val2", "https://www5.blopasdfblop.com/wrt?is=at&other=1");
+//		CookieTwism cookie3 = new CookieTwism(up);
+//		String encoded3 = cookie3.encodeIntoCookiePayload(SECRET);
+//		System.out.println("encoded="+encoded3);
+//		CookieTwism cookie4 = new CookieTwism(encoded3);
+//		up = cookie4.recoverUserParamsFromCookiePayload(SECRET);
+//		for ( String k : up.keySet() ) { System.out.println(k+"="+up.get(k)); }
+//		
+//	}
 
 }

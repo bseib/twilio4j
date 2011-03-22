@@ -362,43 +362,106 @@ abstract public class TwilioStateMachineServlet<E extends Enum<?>> extends Twili
 	}
 	
 	/**
-	 * 
-	 * @param phrase
-	 * @return
+	 * Inserts a {@link Say} verb into your TwiML.
+	 * @param phrase  the phrase to speak to the caller.
+	 * @return a {@link Say} object for chaining attributes.
+	 * @see Say
 	 */
 	final public Say say(String phrase) {
 		return new Say(phrase);
 	}
+	/**
+	 * Inserts a {@link Play} verb into your TwiML.
+	 * @param audioUrl  a url of audio to play to the caller.
+	 * @return a {@link Play} object for chaining attributes.
+	 * @see Play
+	 */
 	final public Play play(String audioUrl) {
 		return new Play(audioUrl);
 	}
+	/**
+	 * Inserts a {@link Gather} verb into your TwiML.
+	 * @param nested  a comma separated list of {@link Say}, {@link Play}, and {@link Pause} verbs.
+	 * @return a {@link Gather} object for chaining attributes.
+	 * @see Gather
+	 */
 	final public Gather<E> gather(NestInGather... nested) {
 		return new Gather<E>(nested);
 	}
+	/**
+	 * Inserts a {@link Record} verb into your TwiML.
+	 * @return a {@link Record} object for chaining attributes.
+	 * @see Record
+	 */
 	final public Record<E> record() {
 		return new Record<E>();
 	}
+	/**
+	 * Inserts a {@link Sms} verb into your TwiML.
+	 * @param message  the text message to send via SMS.
+	 * @return a {@link Sms} object for chaining attributes.
+	 * @see Sms
+	 */
 	final public Sms<E> sms(String message) {
 		return new Sms<E>(message);
 	}
+	/**
+	 * Inserts a {@link Dial} verb into your TwiML.
+	 * @param nested  a comma separated list of {@link Number} and {@link Conference} nouns.
+	 * @return a {@link Dial} object for chaining attributes.
+	 * @see Dial
+	 */
 	final public Dial<E> dial(NestInDial... nested) {
 		return new Dial<E>(nested);
 	}
+	/**
+	 * Inserts a {@link Number} verb into your TwiML.
+	 * @param number  the phone number to dial.
+	 * @return a {@link Number} object for chaining attributes.
+	 * @see Number, Dial
+	 */
 	final public Number<E> number(String number) {
 		return new Number<E>(number);
 	}
+	/**
+	 * Inserts a {@link Conference} verb into your TwiML.
+	 * @param roomName  the name of the conference call room.
+	 * @return a {@link Conference} object for chaining attributes.
+	 * @see Conference, Dial
+	 */
 	final public Conference<E> conference(String roomName) {
 		return new Conference<E>(roomName);
 	}
+	/**
+	 * Inserts a {@link Hangup} verb into your TwiML.
+	 * @return a {@link Hangup} object for chaining attributes.
+	 * @see Hangup
+	 */
 	final public Hangup hangup() {
 		return new Hangup();
 	}
+	/**
+	 * Inserts a {@link Redirect} verb into your TwiML.
+	 * @param nextState  the enumerated state to redirect to.
+	 * @return a {@link Redirect} object for chaining attributes.
+	 * @see Redirect
+	 */
 	final public Redirect<E> redirect(E nextState) {
 		return new Redirect<E>(nextState);
 	}
+	/**
+	 * Inserts a {@link Reject} verb into your TwiML.
+	 * @return a {@link Reject} object for chaining attributes.
+	 * @see Reject
+	 */
 	final public Reject reject() {
 		return new Reject();
 	}
+	/**
+	 * Inserts a {@link Pause} verb into your TwiML.
+	 * @return a {@link Pause} object for chaining attributes.
+	 * @see Pause
+	 */
 	final public Pause pause() {
 		return new Pause();
 	}

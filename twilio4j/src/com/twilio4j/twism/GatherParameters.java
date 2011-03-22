@@ -15,6 +15,15 @@
  */
 package com.twilio4j.twism;
 
+/**
+ * Twilio will pass the following parameters in addition to the standard TwiML Voice request parameters with its request to the 'action' URL of {@link Gather}.
+ * 
+ * @author broc.seib@gentomi.com
+ *
+ */
 public interface GatherParameters {
+	/**
+	 * @return The digits the caller pressed, excluding the finishOnKey digit if used.
+	 */
 	public String getDigits();
 }
