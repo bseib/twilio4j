@@ -105,7 +105,7 @@ public class NumberGameStateMachine extends TwilioStateMachine<NumberGameState> 
  *
  * @param <E> Your enum that declares all states in your state machine. 
  */
-abstract public class TwilioStateMachine<E extends Enum<?>> extends TwilioStateMachineServlet {
+abstract public class TwilioStateMachine<E extends Enum<?>> extends TwilioStateMachineServletBase {
 	private static final long serialVersionUID = 1L;
 	
 	final static private Logger logger = Logger.getLogger(TwilioStateMachine.class.getSimpleName());

@@ -26,7 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * <p>TwilioStateMachineServlet accepts HTTP GET and POST connections from Twilio,
+ * <p>TwilioStateMachineServletBase accepts HTTP GET and POST connections from Twilio,
  * and advances a phone call through the various states of a state machine.
  * Each possible state is represented by an enumerated type which you declare. The
  * corresponding actions for each enumeration can be java code, or TwiML, or a
@@ -53,10 +53,10 @@ import javax.servlet.http.HttpServletResponse;
  * @author broc.seib@gentomi.com
  * 
  */
-abstract public class TwilioStateMachineServlet extends HttpServlet {
+abstract public class TwilioStateMachineServletBase extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	final static private Logger logger = Logger.getLogger(TwilioStateMachineServlet.class.getSimpleName());
+	final static private Logger logger = Logger.getLogger(TwilioStateMachineServletBase.class.getSimpleName());
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
