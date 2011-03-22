@@ -20,19 +20,19 @@ import java.util.logging.Logger;
 import com.twilio4j.twiml.TwiML;
 import com.twilio4j.twism.RecordParameters;
 import com.twilio4j.twism.TwilioParameters;
-import com.twilio4j.twism.TwilioStateMachine;
+import com.twilio4j.twism.TwilioStateMachineServlet;
 
 import static com.twilio4j.twism.eg.VoiceRecordState.*;
 
 
-public class VoiceRecordStateMachine extends TwilioStateMachine<VoiceRecordState> {
+public class VoiceRecordStateMachineServlet extends TwilioStateMachineServlet<VoiceRecordState> {
 	private static final long serialVersionUID = 1L;
 	
-	final static private Logger logger = Logger.getLogger(VoiceRecordStateMachine.class.getSimpleName());
+	final static private Logger logger = Logger.getLogger(VoiceRecordStateMachineServlet.class.getSimpleName());
 
 	final static private String U_RECORDING_URL = "U_RECORDING_URL";
 	
-	public VoiceRecordStateMachine() {
+	public VoiceRecordStateMachineServlet() {
 		
 		handler(H_GATHER_CALL_IN_CODE).respondsWith(
 			gather(

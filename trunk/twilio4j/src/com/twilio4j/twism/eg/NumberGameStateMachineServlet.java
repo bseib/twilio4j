@@ -2,14 +2,14 @@ package com.twilio4j.twism.eg;
 
 import com.twilio4j.twiml.TwiML;
 import com.twilio4j.twism.TwilioParameters;
-import com.twilio4j.twism.TwilioStateMachine;
+import com.twilio4j.twism.TwilioStateMachineServlet;
 
 import static com.twilio4j.twism.eg.NumberGameState.*;
 
-public class NumberGameStateMachine extends TwilioStateMachine<NumberGameState> {
+public class NumberGameStateMachineServlet extends TwilioStateMachineServlet<NumberGameState> {
 	private static final long serialVersionUID = 1L;
 	
-	public NumberGameStateMachine() {
+	public NumberGameStateMachineServlet() {
 		handler(PICK_NUMBER).respondsWith(
 			gather(
 				say("pick a number between zero and nine.")
