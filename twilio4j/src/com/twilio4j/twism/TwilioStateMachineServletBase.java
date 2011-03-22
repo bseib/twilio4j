@@ -33,7 +33,7 @@ import javax.servlet.http.HttpServletResponse;
  * combination of both.</p>
  * 
  * <p>You will not use this class directly. You should create a subclass of
- * TwilioStateMachine to create your call flow state machine. You should create
+ * TwilioStateMachineServlet to create your call flow state machine. You should create
  * an enumerated type to represent all the states of your machine. Those two classes
  * are the minimum needed.
  * </p> 

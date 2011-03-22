@@ -37,9 +37,9 @@ import com.twilio4j.twiml.Sms;
 import com.twilio4j.twiml.TwiML;
 
 /**
- * <p>TwilioStateMachine is the class you need to extend in order to create your own call flow
+ * <p>TwilioStateMachineServlet is the class you need to extend in order to create your own call flow
  * state machine. First you must create an enumerated type that represents all the states of
- * your machine. This enum is used to "type" the TwilioStateMachine when you extend it.</p>
+ * your machine. This enum is used to "type" the TwilioStateMachineServlet when you extend it.</p>
  * 
  * <p>You don't override any member functions in your subclass. Instead, you just supply a
  * constructor, where you repeatedly call handler() to populate your state machine. And
@@ -51,14 +51,14 @@ import com.twilio4j.twiml.TwiML;
  * <pre>
 import com.twilio4j.twiml.TwiML;
 import com.twilio4j.twism.TwilioParameters;
-import com.twilio4j.twism.TwilioStateMachine;
+import com.twilio4j.twism.TwilioStateMachineServlet;
 
 import static com.twilio4j.twism.eg.NumberGameState.*;
 
-public class NumberGameStateMachine extends TwilioStateMachine<NumberGameState> {
+public class NumberGameStateMachineServlet extends TwilioStateMachineServlet<NumberGameState> {
 	private static final long serialVersionUID = 1L;
 	
-	public NumberGameStateMachine() {
+	public NumberGameStateMachineServlet() {
 		handler(PICK_NUMBER).respondsWith(
 			gather(
 				say("pick a number between zero and nine.")
@@ -105,10 +105,10 @@ public class NumberGameStateMachine extends TwilioStateMachine<NumberGameState> 
  *
  * @param <E> Your enum that declares all states in your state machine. 
  */
-abstract public class TwilioStateMachine<E extends Enum<?>> extends TwilioStateMachineServletBase {
+abstract public class TwilioStateMachineServlet<E extends Enum<?>> extends TwilioStateMachineServletBase {
 	private static final long serialVersionUID = 1L;
 	
-	final static private Logger logger = Logger.getLogger(TwilioStateMachine.class.getSimpleName());
+	final static private Logger logger = Logger.getLogger(TwilioStateMachineServlet.class.getSimpleName());
 	
 	@Override
 	public String advanceState(String pathInfo, TwilioParameters tp) throws ServletException {
