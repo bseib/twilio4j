@@ -20,7 +20,7 @@ import com.twilio4j.twism.Method;
 
 /**
  * This class directly reflects the Redirect verb documented at
- * http://www.twilio.com/docs/api/twiml/redirect
+ * <a href="http://www.twilio.com/docs/api/twiml/redirect">http://www.twilio.com/docs/api/twiml/redirect</a>
  * 
  * All of the descriptions included in these javadoc comments
  * come directly from the twilio website.
@@ -45,20 +45,48 @@ public class Redirect<E extends Enum<?>> extends TwiML {
 		buf.append("</Redirect>");
 	}
 	
+	/**
+	 * The 'Redirect' verb transfers control of a call to the TwiML at a different URL.
+	 * All verbs after 'Redirect' are unreachable and ignored.
+	 * @param nextState
+	 */
 	public Redirect(E nextState) {
 		this.nextState = nextState;
 	}
 	
+	/**
+	 * The 'method' attribute takes the value 'GET' or 'POST'. This tells Twilio whether
+	 * to request the 'Redirect' URL via HTTP GET or POST. 'POST' is the default.
+	 * 
+	 * @param method  Allowed values: Method.GET, Method.POST. Default value: Method.POST.
+	 * @return  this object so more attributes may be chained.
+	 */
 	public Redirect<E> method(Method method) {
 		this.method = method;
 		return this;
 	}
+	/**
+	 * Convenience function that does the same as method(Method.POST).
+	 * @return  this object so more attributes may be chained.
+	 */
 	public Redirect<E> methodPOST() { return method(Method.POST); }
+	/**
+	 * Convenience function that does the same as method(Method.GET).
+	 * @return  this object so more attributes may be chained.
+	 */
 	public Redirect<E> methodGET() { return method(Method.GET); }
 
+	/**
+	 * Getter for the nextState.
+	 * @return  the nextState if it was set, else null.
+	 */
 	public E getNextState() {
 		return nextState;
 	}
+	/**
+	 * Getter for the 'method' attribute.
+	 * @return  the 'method' attribute if it was set, else null.
+	 */
 	public Method getMethod() {
 		return method;
 	}

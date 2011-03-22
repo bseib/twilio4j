@@ -18,7 +18,7 @@ package com.twilio4j.twiml;
 
 /**
  * This class directly reflects the Hangup verb documented at
- * http://www.twilio.com/docs/api/twiml/hangup
+ * <a href="http://www.twilio.com/docs/api/twiml/hangup">http://www.twilio.com/docs/api/twiml/hangup</a>
  * 
  * All of the descriptions included in these javadoc comments
  * come directly from the twilio website.
@@ -35,5 +35,12 @@ public class Hangup extends TwiML {
 	public void toXml(StringBuilder buf, String baseUrl) {
 		buf.append("<Hangup/>");
 	}
+	
+	/**
+	 * The 'Hangup' verb ends a call. If used as the first verb in a TwiML response
+	 * it does not prevent Twilio from answering the call and billing your account.
+	 * The only way to not answer a call and prevent billing is to use the 'Reject' verb.
+	 */
+	public Hangup() {}
 
 }

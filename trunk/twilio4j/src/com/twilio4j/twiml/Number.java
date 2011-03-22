@@ -17,7 +17,7 @@ package com.twilio4j.twiml;
 
 /**
  * This class directly reflects the Number verb documented at
- * http://www.twilio.com/docs/api/twiml/number
+ * <a href="http://www.twilio.com/docs/api/twiml/number">http://www.twilio.com/docs/api/twiml/number</a>
  * 
  * All of the descriptions included in these javadoc comments
  * come directly from the twilio website.
@@ -44,15 +44,48 @@ public class Number<E extends Enum<?>> extends TwiML implements NestInDial {
 		buf.append("</Number>");
 	}
 	
+	/**
+	 * <p>The {@link Dial} verb's {@link Number} noun specifies a phone number to dial. Using the noun's attributes
+	 * you can specify particular behaviors that Twilio should apply when dialing the number.</p>
+	 * 
+	 * <p>You can use multiple {@link Number} nouns within a {@link Dial} verb to simultaneously call all of them
+	 * at once. The first call to pick up is connected to the current call and the rest are hung up.</p>
+	 * 
+	 * @param number  Allowed values: a valid phone number.
+	 */
 	public Number(String number) {
 		this.number = number;
 	}
 	
+	/**
+	 * <p>The 'sendDigits' attribute tells Twilio to play DTMF tones when the call is answered. This is useful when
+	 * dialing a phone number and an extension. Twilio will dial the number, and when the automated system picks up,
+	 * send the DTMF tones to connect to the extension.</p>
+	 * 
+	 * @param sendDigits  Allowed values: any digits. Default value: none.
+	 * @return  this object so more attributes may be chained.
+	 */
 	public Number<E> sendDigits(String sendDigits) {
 		this.sendDigits = sendDigits;
 		return this;
 	}
 	
+	/**
+	 * <p>The a state in the state machine to present to the called person.</p>
+	 * 
+	 * <p>Note: below is the original TwiML documentation from Twilio. But in twilio4j, action urls are expressed
+	 * as an enumerated value rather than a raw URL. The parent class {@link com.twilio4j.twism.TwilioStateMachine} maps this enumerated
+	 * value into a relative URL to cause the next state to be invoked.</p>
+	 * 
+	 * <p>The 'url' attribute allows you to specify a url for a TwiML document that will run on the called party's end,
+	 * after she answers, but before the parties are connected. You can use this TwiML to privately play or say
+	 * information to the called party, or provide a chance to decline the phone call using {@link Gather} and {@link Hangup}.
+	 * The current caller will continue to hear ringing while the TwiML document executes on the other end. TwiML
+	 * documents executed in this manner are not allowed to contain the {@link Dial} verb.</p>
+	 * 
+	 * @param url  Allowed values: any of your enumerated states. Default value: null.
+	 * @return  this object so more attributes may be chained.
+	 */
 	public Number<E> url(E url) {
 		this.url = url;
 		return this;
