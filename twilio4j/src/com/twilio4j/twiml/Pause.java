@@ -18,7 +18,7 @@ package com.twilio4j.twiml;
 
 /**
  * This class directly reflects the Pause verb documented at
- * http://www.twilio.com/docs/api/twiml/pause
+ * <a href="http://www.twilio.com/docs/api/twiml/pause">http://www.twilio.com/docs/api/twiml/pause</a>
  * 
  * All of the descriptions included in these javadoc comments
  * come directly from the twilio website.
@@ -40,11 +40,27 @@ public class Pause extends TwiML implements NestInGather {
 		buf.append("/>");
 	}
 	
+	/**
+	 * The 'Pause' verb waits silently for a specific number of seconds. If 'Pause' is the first verb
+	 * in a TwiML document, Twilio will wait the specified number of seconds before picking up the call.
+	 */
+	public Pause() {}
+
+	/**
+	 * The 'length' attribute specifies how many seconds Twilio will wait silently before continuing on.
+	 * 
+	 * @param seconds  Allowed values: integer > 0. Default value: 1.
+	 * @return  this object so more attributes may be chained.
+	 */
 	public Pause length(int seconds) {
 		this.length = seconds;
 		return this;
 	}
 
+	/**
+	 * Getter for the 'length' attribute.
+	 * @return  the 'length' attribute if it was set, else null.
+	 */
 	public Integer getLength() {
 		return length;
 	}

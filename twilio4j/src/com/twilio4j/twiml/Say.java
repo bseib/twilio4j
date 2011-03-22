@@ -17,7 +17,7 @@ package com.twilio4j.twiml;
 
 /**
  * This class directly reflects the Say verb documented at
- * http://www.twilio.com/docs/api/twiml/say
+ * <a href="http://www.twilio.com/docs/api/twiml/say">http://www.twilio.com/docs/api/twiml/say</a>
  * 
  * All of the descriptions included in these javadoc comments
  * come directly from the twilio website.
@@ -64,9 +64,9 @@ public class Say extends TwiML implements NestInGather {
 	}
 	
 	/**
-	 * The <Say> verb converts text to speech that is read back to the caller.
-	 * <Say> is useful for development or saying dynamic text that is difficult
-	 * to pre-record.
+	 * <p>The 'Say' verb converts text to speech that is read back to the caller.
+	 * 'Say' is useful for development or saying dynamic text that is difficult
+	 * to pre-record.</p>
 	 * 
 	 * @param phrase  The text Twilio will read to the caller. Limited to 4KB.
 	 */
@@ -78,9 +78,8 @@ public class Say extends TwiML implements NestInGather {
 	 * The 'voice' attribute allows you to choose a male or female voice to read text back.
 	 * The default value is 'man'.
 	 * 
-	 * @param v  the value must be the Voice.man, or Voice.woman enumerated type. The Default
-	 *           value is Voice.man if this attribute is not set.
-	 * @return Say object so more attributes may be chained.
+	 * @param v  Allowed values: Voice.man, or Voice.woman. Default value: Voice.man.
+	 * @return  this object so more attributes may be chained.
 	 */
 	public Say voice(Voice v) {
 		this.voice = v;
@@ -88,12 +87,12 @@ public class Say extends TwiML implements NestInGather {
 	}
 	/**
 	 * This is the same as calling voice(Voice.man), but less annoying to utilize.
-	 * @return Say object so more attributes may be chained.
+	 * @return  this object so more attributes may be chained.
 	 */
 	public Say voiceMAN() { return voice(Voice.man); }
 	/**
 	 * This is the same as calling voice(Voice.woman), but less annoying to utilize.
-	 * @return Say object so more attributes may be chained.
+	 * @return  this object so more attributes may be chained.
 	 */
 	public Say voiceWOMAN() { return voice(Voice.woman); }
 
@@ -102,33 +101,32 @@ public class Say extends TwiML implements NestInGather {
 	 * accent and pronunciations. Twilio currently supports languages 'en' (English),
 	 * 'es' (Spanish), 'fr' (French), and 'de' (German). The default is 'en'.
 	 * 
-	 * @param l  the value must be one of the enumerated type Language. One of
-	 *           Language.en, Language.es, Language.fr, Language.de. Default
-	 *           value is Language.en if this attribute is not set.
-	 * @return Say object so more attributes may be chained.
+	 * @param language  Allowed values: Language.en, Language.es, Language.fr, and
+	 * 					Language.de. Default value: Language.en
+	 * @return  this object so more attributes may be chained.
 	 */
-	public Say language(Language l) {
-		this.language = l;
+	public Say language(Language language) {
+		this.language = language;
 		return this;
 	}
 	/**
 	 * Convenience function that does the same as calling language(Language.en).
-	 * @return Say object so more attributes may be chained.
+	 * @return  this object so more attributes may be chained.
 	 */
 	public Say languageEN() { return language(Language.en); }
 	/**
 	 * Convenience function that does the same as calling language(Language.es).
-	 * @return Say object so more attributes may be chained.
+	 * @return  this object so more attributes may be chained.
 	 */
 	public Say languageES() { return language(Language.es); }
 	/**
 	 * Convenience function that does the same as calling language(Language.fr).
-	 * @return Say object so more attributes may be chained.
+	 * @return  this object so more attributes may be chained.
 	 */
 	public Say languageFR() { return language(Language.fr); }
 	/**
 	 * Convenience function that does the same as calling language(Language.de).
-	 * @return Say object so more attributes may be chained.
+	 * @return  this object so more attributes may be chained.
 	 */
 	public Say languageDE() { return language(Language.de); }
 	
@@ -138,7 +136,7 @@ public class Say extends TwiML implements NestInGather {
 	 * until the call is hung up.
 	 * 
 	 * @param loopCount  Must be >=0. Default value is 1.
-	 * @return Say object so more attributes may be chained.
+	 * @return  this object so more attributes may be chained.
 	 */
 	public Say loop(int loopCount) {
 		this.loop = loopCount;
