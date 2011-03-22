@@ -15,11 +15,9 @@
  */
 package com.twilio4j.twism;
 
-/**
- * Enumerated values for HTTP methods that may be used with
- * an 'action' or 'callback'. Available values are 'GET', and 'POST'.
- * @author broc.seib@gentomi.com
- */
-public enum Method {
-	GET, POST
+public interface TranscribeParameters {
+	public String getTranscriptionText();
+	public TranscriptionStatus getTranscriptionStatus();
+	public String getTranscriptionUrl();
+	public String getRecordingUrl();
 }

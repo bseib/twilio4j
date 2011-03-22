@@ -123,5 +123,17 @@ public class TwilioParameters {
 		};
 	}
 
+	// for Transcribe Callback Parameters (from Record)
+	public TranscribeParameters TranscribeCallback() {
+		return new TranscribeParameters() {
+			public String getRecordingUrl() { return req.getParameter("RecordingUrl"); }
+			public TranscriptionStatus getTranscriptionStatus() {
+				return TranscriptionStatus.valueOf( req.getParameter("TranscriptionStatus") );
+			}
+			public String getTranscriptionText() { return req.getParameter("TranscriptionText"); }
+			public String getTranscriptionUrl() { return req.getParameter("TranscriptionUrl"); }
+		};
+	}
+
 	
 }
