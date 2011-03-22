@@ -173,7 +173,7 @@ public class TwilioParameters {
 	public String getCallDuration() { return req.getParameter("CallDuration"); }
 
 	/**
-	 * To access parameters posted by the action of the {@link Gather} verb.
+	 * To access parameters posted by the action of the {@link com.twilio4j.twiml.Gather} verb.
 	 * @return {@link GatherParameters}
 	 */
 	public GatherParameters Gather() {
@@ -183,7 +183,7 @@ public class TwilioParameters {
 	}
 	
 	/**
-	 * To access parameters posted by the action of the {@link Record} verb.
+	 * To access parameters posted by the action of the {@link com.twilio4j.twiml.Record} verb.
 	 * @return {@link RecordParameters}
 	 */
 	public RecordParameters Record() {
@@ -196,7 +196,7 @@ public class TwilioParameters {
 	}
 	
 	/**
-	 * To access parameters posted by the action of the {@link Sms} verb.
+	 * To access parameters posted by the action of the {@link com.twilio4j.twiml.Sms} verb.
 	 * @return {@link SmsParameters}
 	 */
 	public SmsParameters Sms() {
@@ -207,7 +207,7 @@ public class TwilioParameters {
 	}
 	
 	/**
-	 * To access parameters posted by the action of the {@link Dial} verb.
+	 * To access parameters posted by the action of the {@link com.twilio4j.twiml.Dial} verb.
 	 * @return {@link DialParameters}
 	 */
 	public DialParameters Dial() {
@@ -221,7 +221,7 @@ public class TwilioParameters {
 	}
 
 	/**
-	 * To access parameters posted by the transcribe callback of the {@link Record} verb.
+	 * To access parameters posted by the transcribe callback of the {@link com.twilio4j.twiml.Record} verb.
 	 * @return {@link TranscribeParameters}
 	 */
 	public TranscribeParameters TranscribeCallback() {

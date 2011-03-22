@@ -77,7 +77,7 @@ public class Gather<E extends Enum<?>> extends TwiML {
 	 * <p>The next state in the state machine.</p>
 	 * 
 	 * <p>Note: below is the original TwiML documentation from Twilio. But in twilio4j, actions are expressed
-	 * as an enumerated value rather than a raw URL. The parent class {@link com.twilio4j.twism.TwilioStateMachine} maps this enumerated
+	 * as an enumerated value rather than a raw URL. The parent class {@link com.twilio4j.twism.TwilioStateMachineServlet} maps this enumerated
 	 * value into a relative URL to cause the next state to be invoked.</p>
 	 * 
 	 * <p>The 'action' attribute takes an absolute or relative URL as a value. When the caller has finished
@@ -239,43 +239,37 @@ public class Gather<E extends Enum<?>> extends TwiML {
 	}
 
 	/**
-	 * 
-	 * @return
+	 * @return the nested {@link Say}, {@link Play}, and {@link Pause} verbs. 
 	 */
 	public NestInGather[] getNestedVerbs() {
 		return nestedVerbs;
 	}
 	/**
-	 * 
-	 * @return
+	 * @return the enumerated state that designates the action to take.
 	 */
 	public E getAction() {
 		return action;
 	}
 	/**
-	 * 
-	 * @return
+	 * @return the GET or POST method that goes with the action.
 	 */
 	public Method getMethod() {
 		return method;
 	}
 	/**
-	 * 
-	 * @return
+	 * @return the timeout attribute.
 	 */
 	public Integer getTimeout() {
 		return timeout;
 	}
-	/**
-	 * 
-	 * @return
+	/** 
+	 * @return the finishOnKey attribute.
 	 */
 	public Character getFinishOnKey() {
 		return finishOnKey;
 	}
 	/**
-	 * 
-	 * @return
+	 * @return the numDigits attribute.
 	 */
 	public Integer getNumDigits() {
 		return numDigits;

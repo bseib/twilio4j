@@ -16,7 +16,7 @@
 package com.twilio4j.twism;
 
 /**
- * Twilio will pass the following parameters in addition to the standard TwiML Voice request parameters with its request to the 'statusCallback' URL of {@link Sms}.
+ * Twilio will pass the following parameters in addition to the standard TwiML Voice request parameters with its request to the 'statusCallback' URL of {@link com.twilio4j.twiml.Sms}.
  * 
  * @author broc.seib@gentomi.com
  *

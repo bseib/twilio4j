@@ -16,7 +16,7 @@
 package com.twilio4j.twism;
 
 /**
- * Twilio will pass the following parameters in addition to the standard TwiML Voice request parameters with its request to the 'action' URL of {@link Gather}.
+ * Twilio will pass the following parameters in addition to the standard TwiML Voice request parameters with its request to the 'action' URL of {@link com.twilio4j.twiml.Gather}.
  * 
  * @author broc.seib@gentomi.com
  *

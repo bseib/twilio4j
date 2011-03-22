@@ -126,10 +126,10 @@ public class Conference<E extends Enum<?>> extends TwiML implements NestInDial {
 	
 	/**
 	 * <p>The 'waitUrl' attribute lets you specify a URL for music that plays before the conference has
-	 * started. The URL may be an MP3, a WAV or a TwiML document that uses {@linkPlay} or {@linkSay} for content.
+	 * started. The URL may be an MP3, a WAV or a TwiML document that uses {@link Play} or {@link Say} for content.
 	 * This defaults to a selection of Creative Commons licensed background music, but you can replace it
 	 * with your own music and messages. If the 'waitUrl' responds with TwiML, Twilio will only process
-	 * {@linkPlay}, {@linkSay}, and {@linkRedirect} verbs. {@linkRecord}, {@linkDial}, and {@linkGather} verbs are not allowed. If you
+	 * {@link Play}, {@link Say}, and {@link Redirect} verbs. {@link Record}, {@link Dial}, and {@link Gather} verbs are not allowed. If you
 	 * do not wish anything to play while waiting for the conference to start, specify the empty string
 	 * (set 'waitUrl' to '').</p>
 	 * 
