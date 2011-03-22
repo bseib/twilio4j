@@ -75,7 +75,7 @@ public class Dial<E extends Enum<?>> extends TwiML {
 	 * <p>The next state in the state machine.</p>
 	 * 
 	 * <p>Note: below is the original TwiML documentation from Twilio. But in twilio4j, actions are expressed
-	 * as an enumerated value rather than a raw URL. The parent class {@link com.twilio4j.twism.TwilioStateMachine} maps this enumerated
+	 * as an enumerated value rather than a raw URL. The parent class {@link com.twilio4j.twism.TwilioStateMachineServlet} maps this enumerated
 	 * value into a relative URL to cause the next state to be invoked.</p>
 	 * 
 	 * <p>The 'action' attribute takes a URL as an argument. When the dialed call ends, Twilio will

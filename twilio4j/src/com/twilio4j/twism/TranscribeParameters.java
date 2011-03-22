@@ -16,7 +16,7 @@
 package com.twilio4j.twism;
 
 /**
- * Twilio will pass the following parameters in addition to the standard TwiML Voice request parameters with its request to the 'transcribeCallback' URL of {@link Record}.
+ * Twilio will pass the following parameters in addition to the standard TwiML Voice request parameters with its request to the 'transcribeCallback' URL of {@link com.twilio4j.twiml.Record}.
  * 
  * @author broc.seib@gentomi.com
  *

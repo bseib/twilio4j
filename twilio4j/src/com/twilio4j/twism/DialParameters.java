@@ -18,7 +18,7 @@ package com.twilio4j.twism;
 import com.twilio4j.twism.TwilioParameters.DialCallStatus;
 
 /**
- * Twilio will pass the following parameters in addition to the standard TwiML Voice request parameters with its request to the 'action' URL of {@link Dial}.
+ * Twilio will pass the following parameters in addition to the standard TwiML Voice request parameters with its request to the 'action' URL of {@link com.twilio4j.twiml.Dial}.
  * 
  * @author broc.seib@gentomi.com
  *
@@ -29,7 +29,7 @@ public interface DialParameters {
 	 */
 	public String getDialCallSid();
 	/**
-	 * @return The outcome of the {@link Dial} attempt. The possible outcomes are enumerated as {@link DialCallStatus}.
+	 * @return The outcome of the {@link com.twilio4j.twiml.Dial} attempt. The possible outcomes are enumerated as {@link DialCallStatus}.
 	 */
 	public DialCallStatus getDialCallStatus();
 	/**

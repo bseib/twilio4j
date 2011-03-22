@@ -85,7 +85,7 @@ public class Sms<E extends Enum<?>> extends TwiML {
 	
 	/**
 	 * <p>The 'from' attribute takes a valid phone number as an argument. This number must be a phone number that you've purchased from or ported to Twilio. When sending an SMS during an incoming call, 'from' defaults to the called party. When sending an SMS during an outgoing call, 'from' defaults to the calling party. This number must be an SMS-capable local phone number assigned to your account. If the phone number isn't SMS-capable, then the <Sms> verb will not send an SMS message.</p>
-	 * @param to  Allowed values: phone number. Default value: see above.
+	 * @param from  Allowed values: phone number. Default value: see above.
 	 * @return  this object so more attributes may be chained.
 	 */
 	public Sms<E> from(String from) {
@@ -97,7 +97,7 @@ public class Sms<E extends Enum<?>> extends TwiML {
 	 * <p>The next state in the state machine.</p>
 	 * 
 	 * <p>Note: below is the original TwiML documentation from Twilio. But in twilio4j, actions are expressed
-	 * as an enumerated value rather than a raw URL. The parent class {@link com.twilio4j.twism.TwilioStateMachine} maps this enumerated
+	 * as an enumerated value rather than a raw URL. The parent class {@link com.twilio4j.twism.TwilioStateMachineServlet} maps this enumerated
 	 * value into a relative URL to cause the next state to be invoked.</p>
 	 * 
 	 * <p>The 'action' attribute takes a URL as an argument. After processing the {@link Sms} verb, Twilio will make
@@ -153,7 +153,7 @@ public class Sms<E extends Enum<?>> extends TwiML {
 	 * <p>A callback state in the state machine.</p>
 	 * 
 	 * <p>Note: below is the original TwiML documentation from Twilio. But in twilio4j, callbacks are expressed
-	 * as an enumerated value rather than a raw URL. The parent class {@link com.twilio4j.twism.TwilioStateMachine} maps this enumerated
+	 * as an enumerated value rather than a raw URL. The parent class {@link com.twilio4j.twism.TwilioStateMachineServlet} maps this enumerated
 	 * value into a relative URL to cause the callback to be invoked.</p>
 	 * 
 	 * <p>The 'statusCallback' attribute takes a URL as an argument. When the SMS message is actually sent, or
