@@ -75,8 +75,10 @@ public class NumberGameStateMachineServlet extends TwilioStateMachineServlet<Num
 	}
 
 	@Override
+        // this is used in digital signature of a cookie.
+        // supply any long "random" string >= 40 characters.
 	public String getFortyCharacterSecret() {
-		return "3440e0fa2eae0a28e5dc58d76793eb151c19acf7";
+		return "6710e0fa2eae0a28e5dc58d76793eb151c19a927";
 	}
 
 }
