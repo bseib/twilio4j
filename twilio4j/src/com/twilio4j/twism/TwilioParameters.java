@@ -184,7 +184,10 @@ public class TwilioParameters {
 	 * CallDuration parameter is present in StatusCallback requests. After receiving a call, requesting TwiML from your app, processing it, and finally ending the call, Twilio will make an asynchronous HTTP request to the StatusCallback URL configured for the called Twilio number (if there is one). By providing a StatusCallback URL for your Twilio number and capturing this request you can determine when a call ends and receive information about the call.
 	 * @return The duration in seconds of the just-completed call.
 	 */
-	public String getCallDuration() { return req.getParameter("CallDuration"); }
+	public int getCallDuration() {
+		String duration = req.getParameter("CallDuration");
+		return Integer.parseInt(duration);
+	}
 
 	/**
 	 * To access parameters posted by the action of the {@link com.twilio4j.twiml.Gather} verb.
