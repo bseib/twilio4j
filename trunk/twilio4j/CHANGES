@@ -1,7 +1,14 @@
+VERSION 0.9.2 - 2011032801
+==========================
+
+Fixed missing parameter getters if the incoming request is from an SMS message.
+  - added getSmsSid() to TwilioParameters class
+  - added getBody() to TwilioParameters class
+
+
 VERSION 0.9.1 - 2011032201
 ==========================
 
 Nearing first release of a jar file. Much refactoring and javadocs done.
 Some real live testing remains.
-
 
