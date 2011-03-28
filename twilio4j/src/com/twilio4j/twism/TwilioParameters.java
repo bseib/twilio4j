@@ -165,6 +165,20 @@ public class TwilioParameters {
 	 */
 	public String getToCountry() { return req.getParameter("ToCountry"); }
 
+	
+	// Standard Sms Request Params. (AccountSid, From and To overlap with Voice Params)
+	
+	/**
+	 * @return A 34 character unique identifier for the message. May be used to later retrieve this message from the REST API.
+	 */
+	public String getSmsSid() { return req.getParameter("SmsSid"); }
+	/**
+	 * @return The text body of the SMS message. Up to 160 characters long.
+	 */
+	public String getBody() { return req.getParameter("Body"); }
+
+	
+	
 	// present for StatusCallback requests
 	/**
 	 * CallDuration parameter is present in StatusCallback requests. After receiving a call, requesting TwiML from your app, processing it, and finally ending the call, Twilio will make an asynchronous HTTP request to the StatusCallback URL configured for the called Twilio number (if there is one). By providing a StatusCallback URL for your Twilio number and capturing this request you can determine when a call ends and receive information about the call.
