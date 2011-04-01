@@ -33,6 +33,7 @@ public class Conference<E extends Enum<?>> extends TwiML implements NestInDial {
 	private Boolean beep;
 	private Boolean startConferenceOnEnter;
 	private Boolean endConferenceOnExit;
+	private String waitUrlString;
 	private E waitUrl;
 	private Method waitMethod;
 	private Integer maxParticipants;
@@ -48,7 +49,11 @@ public class Conference<E extends Enum<?>> extends TwiML implements NestInDial {
 		if ( beep != null ) { buf.append(" beep=\"").append(beep.toString()).append("\""); }
 		if ( startConferenceOnEnter != null ) { buf.append(" startConferenceOnEnter=\"").append(startConferenceOnEnter.toString()).append("\""); }
 		if ( endConferenceOnExit != null ) { buf.append(" endConferenceOnExit=\"").append(endConferenceOnExit.toString()).append("\""); }
-		if ( waitUrl != null ) { buf.append(" waitUrl=\"").append(baseUrl).append(waitUrl.name()).append("\""); }
+		if ( waitUrlString != null ) {
+			buf.append(" waitUrl=\"").append(waitUrlString).append("\"");
+		} else {
+			if ( waitUrl != null ) { buf.append(" waitUrl=\"").append(baseUrl).append(waitUrl.name()).append("\""); }
+		}
 		if ( waitMethod != null ) { buf.append(" waitMethod=\"").append(waitMethod.name()).append("\""); }
 		if ( maxParticipants != null ) { buf.append(" maxParticipants=\"").append(maxParticipants.toString()).append("\""); }
 		buf.append('>');
@@ -157,6 +162,42 @@ public class Conference<E extends Enum<?>> extends TwiML implements NestInDial {
 	 */
 	public Conference<E> waitUrl(E waitUrl) {
 		this.waitUrl = waitUrl;
+		return this;
+	}
+
+	/**
+	 * <p>The 'waitUrl' attribute lets you specify a URL for music that plays before the conference has
+	 * started. The URL may be an MP3, a WAV or a TwiML document that uses {@link Play} or {@link Say} for content.
+	 * This defaults to a selection of Creative Commons licensed background music, but you can replace it
+	 * with your own music and messages. If the 'waitUrl' responds with TwiML, Twilio will only process
+	 * {@link Play}, {@link Say}, and {@link Redirect} verbs. {@link Record}, {@link Dial}, and {@link Gather} verbs are not allowed. If you
+	 * do not wish anything to play while waiting for the conference to start, specify the empty string
+	 * (set 'waitUrl' to '').</p>
+	 * 
+	 * <p>If no 'waitUrl' is specified, Twilio will use it's own HoldMusic Twimlet that reads a public
+	 * AWS S3 Bucket for audio files. The default 'waitUrl' is:</p>
+	 * 
+	 * <ul><li>http://twimlets.com/holdmusic?Bucket=com.twilio.music.classical</li></ul>
+	 * 
+	 * <p>This URL points at S3 bucket com.twilio.music.classical, containing a selection of nice Creative
+	 * Commons classical music. Here's a list of S3 buckets we've assembed with other genres of music for
+	 * you to choose from:</p>
+	 * 
+	 * <table>
+	 *   <tr><td>Bucket</td><td>Twimlet URL</td></tr>
+	 *   <tr><td>com.twilio.music.classical</td><td>http://twimlets.com/holdmusic?Bucket=com.twilio.music.classical</td></tr>
+	 *   <tr><td>com.twilio.music.ambient</td><td>http://twimlets.com/holdmusic?Bucket=com.twilio.music.ambient</td></tr>
+	 *   <tr><td>com.twilio.music.electronica</td><td>http://twimlets.com/holdmusic?Bucket=com.twilio.music.electronica</td></tr>
+	 *   <tr><td>com.twilio.music.guitars</td><td>http://twimlets.com/holdmusic?Bucket=com.twilio.music.guitars</td></tr>
+	 *   <tr><td>com.twilio.music.rock</td><td>http://twimlets.com/holdmusic?Bucket=com.twilio.music.rock</td></tr>
+	 *   <tr><td>com.twilio.music.soft-rock</td><td>http://twimlets.com/holdmusic?Bucket=com.twilio.music.soft-rock</td></tr>
+	 * </table>
+	 * 
+	 * @param waitUrlString  any string referring to an audio mp3 or other acceptable audio format.
+	 * @return  this object so more attributes may be chained.
+	 */
+	public Conference<E> waitUrl(String waitUrlString) {
+		this.waitUrlString = waitUrlString;
 		return this;
 	}
 

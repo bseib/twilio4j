@@ -15,6 +15,9 @@
  */
 package com.twilio4j.twiml;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.twilio4j.twism.Method;
 
 /**
@@ -28,7 +31,7 @@ import com.twilio4j.twism.Method;
  */
 public class Dial<E extends Enum<?>> extends TwiML {
 
-	private NestInDial[] nestedNouns;
+	private List<NestInDial> nestedNouns;
 	
 	private E action;
 	private Method method;
@@ -68,9 +71,30 @@ public class Dial<E extends Enum<?>> extends TwiML {
 	 * @param nestedNouns  You may pass a comma separated list of {@link Number}, and {@link Conference} objects.
 	 */
 	public Dial(NestInDial... nestedNouns) {
-		this.nestedNouns = nestedNouns;
+		this.nestedNouns = new ArrayList<NestInDial>();
+		for ( NestInDial d : nestedNouns ) {
+			this.nestedNouns.add(d);
+		}
 	}
 	
+	/**
+	 * Append a TwiML {@link Number} noun into the Dial verb.
+	 * This call permits you to build the Dial verb dynamically rather than declaratively.
+	 * @param number  You may pass a {@link Number} object.
+	 */
+	public void addNumber(Number<E> number) {
+		this.nestedNouns.add(number);
+	}
+	
+	/**
+	 * Append a TwiML {@link Conference} noun into the Dial verb.
+	 * This call permits you to build the Dial verb dynamically rather than declaratively.
+	 * @param conference  You may pass a {@link Conference} object.
+	 */
+	public void addConference(Conference<E> conference) {
+		this.nestedNouns.add(conference);
+	}
+
 	/**
 	 * <p>The next state in the state machine.</p>
 	 * 
@@ -195,12 +219,8 @@ public class Dial<E extends Enum<?>> extends TwiML {
 		return this;
 	}
 
-	public NestInDial[] getNestedNouns() {
+	public List<NestInDial> getNestedNouns() {
 		return nestedNouns;
-	}
-
-	public void setNestedNouns(NestInDial[] nestedNouns) {
-		this.nestedNouns = nestedNouns;
 	}
 
 	public E getAction() {

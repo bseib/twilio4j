@@ -1,3 +1,20 @@
+VERSION 0.9.3 - 2011040101
+==========================
+
+Fixed some usability issues:
+  - getInitialState() now takes the TwilioParameters so that it can optionally
+    behave as a dispatcher to multiple state machines.
+  - Added a DeclarativeComposer class so that you can write stand-alone state
+    machines that do not inherit from HttpServlet. In this way you can setup
+    a dispatcher to return the initial state of a particular state machine.
+    (I need to write up an example.)
+  - nested verbs are now implemented as array lists so that they may be appended
+    to, allowing dynamic TwiML creation, and not just static declarative TwiML
+    creation.
+  - fixed missing method from the Twilio API -- Conference.waitUrl() can also
+    take a string arg now, specifying a single music resource directly.
+
+
 VERSION 0.9.2 - 2011032801
 ==========================
 
