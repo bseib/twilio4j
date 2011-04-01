@@ -91,7 +91,7 @@ public class Gather<E extends Enum<?>> extends TwiML {
 	/**
 	 * Append a TwiML {@link Play} verb into the Gather verb.
 	 * This call permits you to build the Gather verb dynamically rather than declaratively.
-	 * @param verb You may pass a {@link Play} object.
+	 * @param play You may pass a {@link Play} object.
 	 */
 	public void addPlay(Play play) {
 		this.nestedVerbs.add(play);
@@ -100,7 +100,7 @@ public class Gather<E extends Enum<?>> extends TwiML {
 	/**
 	 * Append a TwiML {@link Pause} verb into the Gather verb.
 	 * This call permits you to build the Gather verb dynamically rather than declaratively.
-	 * @param verb You may pass a {@link Pause} object.
+	 * @param pause You may pass a {@link Pause} object.
 	 */
 	public void addPause(Pause pause) {
 		this.nestedVerbs.add(pause);
