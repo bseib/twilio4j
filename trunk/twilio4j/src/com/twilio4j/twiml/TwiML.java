@@ -15,19 +15,52 @@
  */
 package com.twilio4j.twiml;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Logger;
+
 
 public class TwiML implements ToXML {
 	
-	private TwiML[] nested;
+	final static private Logger logger = Logger.getLogger(TwiML.class.getSimpleName()); 
 	
+	private List<TwiML> nested;
+
+	/**
+	 * <p>The {@link TwiML} object represents the top-level container, i.e. the &lt;Response&gt; element
+	 * in the TwiML. You may supply a comma separated list of any TwiML elements. These include items of
+	 * type @{Say}, @{Play}, @{Gather}, @{Record}, @{Sms}, @{Dial}, @{Hangup}, @{Redirect}, @{Reject}, and @{Pause}.</p>
+	 * 
+	 * @param nested  Valid nested items are of type @{Say}, @{Play}, @{Gather}, @{Record}, @{Sms}, @{Dial}, @{Hangup}, @{Redirect}, @{Reject}, and @{Pause}.
+	 */
 	public TwiML(TwiML... nested) {
-		this.nested = nested;
+		this.nested = new ArrayList<TwiML>();
+		for ( TwiML t : nested ) {
+			this.nested.add(t);
+		}
 	}
 	
-	public TwiML[] getNested() {
+	/**
+	 * Append a TwiML verb into the Response body. This call permits you to build the TwiML response
+	 * dynamically rather than declaratively.
+	 * @param item  Valid items are @{Say}, @{Play}, @{Gather}, @{Record}, @{Sms}, @{Dial}, @{Hangup}, @{Redirect}, @{Reject}, and @{Pause}.
+	 */
+	public void addVerb(TwiML item) {
+		this.nested.add(item);
+	}
+	
+	/**
+	 * @return all the TwiML verbs nested in this instance.
+	 */
+	public List<TwiML> getNested() {
 		return nested;
 	}
 
+	/**
+	 * Convert this object into its XML representation of TwiML.
+	 * @param baseUrl  all 'action' parameters will be turned into a relative URL by prepending this baseUrl to the action name.
+	 * @return  a string representation of the TwiML structure.
+	 */
 	public String toXml(String baseUrl) {
 		StringBuilder buf = new StringBuilder();
 		toXml(buf, baseUrl);
@@ -41,7 +74,11 @@ public class TwiML implements ToXML {
 	public void toXml(StringBuilder buf, String baseUrl) {
 		buf.append("<Response>");
 		for ( TwiML t : nested ) {
-			t.toXml(buf, baseUrl);
+			if ( t == null ) {
+				logger.warning("skipping null nested item");
+			} else {
+				t.toXml(buf, baseUrl);
+			}
 		}
 		buf.append("</Response>");
 	}

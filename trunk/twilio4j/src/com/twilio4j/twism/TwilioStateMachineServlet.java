@@ -117,9 +117,10 @@ abstract public class TwilioStateMachineServlet<E extends Enum<?>> extends Twili
 		if ( (pathInfo!=null) && (pathInfo.length()>1) ) {
 			state = lookupState(pathInfo.substring(1));
 		} else {
-			state = getInitialState();
+			state = getInitialState(tp);
 		}
 		TwilioHandler handler = handlerMap.get(state);
+//System.out.println("state="+state+" handler="+handler);
 		if ( handler != null ) {
 			TwiML twiml = handler.getTwiML(tp);
 			String className = twiml.getClass().getSimpleName();
@@ -159,9 +160,16 @@ abstract public class TwilioStateMachineServlet<E extends Enum<?>> extends Twili
 	 * with /t and therefore will need to lookup the initial state, so that it may
 	 * behave just as if the servlet were invoked as /t/INITIAL_STATE etc.</p>
 	 * 
+	 * @param twilioParameters TwilioParameters are passed such that a state machine
+	 * can dynamically decided the initial state. This is useful if you might have
+	 * multiple, independent state machines. In that case, this function acts as a
+	 * dispatcher when you set your twilio callback URL to point at this URL without
+	 * a particular state in the URL path. This parameter may be ignored if you have
+	 * a fixed initial state.
+	 * 
 	 * @return E enumerated type that represents the initial state.
 	 */
-	abstract public E getInitialState();
+	abstract public E getInitialState(TwilioParameters twilioParameters);
 	
 	/**
 	 * <p>The content of the url beyond the servletPath will exactly match the name

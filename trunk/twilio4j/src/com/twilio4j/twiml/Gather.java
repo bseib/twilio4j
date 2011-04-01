@@ -15,6 +15,9 @@
  */
 package com.twilio4j.twiml;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.twilio4j.twism.Method;
 
 /**
@@ -28,7 +31,7 @@ import com.twilio4j.twism.Method;
  */
 public class Gather<E extends Enum<?>> extends TwiML {
 	
-	private NestInGather nestedVerbs[];
+	private List<NestInGather> nestedVerbs;
 	
 	private E action;
 	private Method method;
@@ -70,7 +73,37 @@ public class Gather<E extends Enum<?>> extends TwiML {
 	 * @param verbs  You may pass a comma separated list of {@link Say}, {@link Play}, and {@link Pause} objects.
 	 */
 	public Gather(NestInGather... verbs) {
-		this.nestedVerbs = verbs;
+		this.nestedVerbs = new ArrayList<NestInGather>();
+		for ( NestInGather g : verbs ) {
+			this.nestedVerbs.add(g);
+		}
+	}
+	
+	/**
+	 * Append a TwiML {@link Say} verb into the Gather verb.
+	 * This call permits you to build the Gather verb dynamically rather than declaratively.
+	 * @param say  You may pass a {@link Say} object.
+	 */
+	public void addSay(Say say) {
+		this.nestedVerbs.add(say);
+	}
+	
+	/**
+	 * Append a TwiML {@link Play} verb into the Gather verb.
+	 * This call permits you to build the Gather verb dynamically rather than declaratively.
+	 * @param verb You may pass a {@link Play} object.
+	 */
+	public void addPlay(Play play) {
+		this.nestedVerbs.add(play);
+	}
+	
+	/**
+	 * Append a TwiML {@link Pause} verb into the Gather verb.
+	 * This call permits you to build the Gather verb dynamically rather than declaratively.
+	 * @param verb You may pass a {@link Pause} object.
+	 */
+	public void addPause(Pause pause) {
+		this.nestedVerbs.add(pause);
 	}
 	
 	/**
@@ -241,7 +274,7 @@ public class Gather<E extends Enum<?>> extends TwiML {
 	/**
 	 * @return the nested {@link Say}, {@link Play}, and {@link Pause} verbs. 
 	 */
-	public NestInGather[] getNestedVerbs() {
+	public List<NestInGather> getNestedVerbs() {
 		return nestedVerbs;
 	}
 	/**

@@ -41,7 +41,7 @@ public class NumberGameStateMachineServlet extends TwilioStateMachineServlet<Num
 	}
 
 	@Override
-	public NumberGameState getInitialState() {
+	public NumberGameState getInitialState(TwilioParameters params) {
 		return PICK_NUMBER;
 	}
 

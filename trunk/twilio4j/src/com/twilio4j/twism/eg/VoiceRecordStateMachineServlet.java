@@ -145,7 +145,7 @@ public class VoiceRecordStateMachineServlet extends TwilioStateMachineServlet<Vo
 	}
 
 	@Override
-	public VoiceRecordState getInitialState() {
+	public VoiceRecordState getInitialState(TwilioParameters params) {
 		return H_GATHER_CALL_IN_CODE;
 	}
 
