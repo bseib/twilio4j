@@ -20,7 +20,7 @@ import com.twilio4j.twism.TwilioStateMachineServlet;
 
 import static com.twilio4j.twism.eg.NumberGameState.*;
 
-public class NumberGameStateMachineServlet extends TwilioStateMachineServlet<NumberGameState> {
+public class NumberGameStateMachineServlet extends TwilioStateMachineServlet&lt;NumberGameState&gt; {
 	private static final long serialVersionUID = 1L;
 	
 	public NumberGameStateMachineServlet() {
@@ -36,7 +36,7 @@ public class NumberGameStateMachineServlet extends TwilioStateMachineServlet<Num
 				char digit = params.Gather().getDigits().charAt(0);
 				if ( digit == '5' ) {
 					return say("You win! Goodbye.");
-				} else if ( digit < '5' ) {
+				} else if ( digit &lt; '5' ) {
 					return gather(
 						say("Pick again, higher.")
 					)
