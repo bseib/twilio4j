@@ -12,7 +12,7 @@ a call flow state machine with twilio4j.
 
 The key points are:
   * you define your states as an Enum in java.
-  * you extend the TwilioStateMachine class.
+  * you extend the TwilioStateMachineServlet class.
   * in your subclass, write blocks of action code for each enum'd state.
   * actions can be TwiML, or Java code.
   * where TwiML expects a URL for next action, just pass a enum'd state.
