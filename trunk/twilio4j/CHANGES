@@ -1,3 +1,10 @@
+VERSION 0.9.4 - 2011083001
+==========================
+
+  - Added twiML 'Client' noun to the Dial verb to support the new Twilio Client.
+  - Made a cosmetic change to a variable name in 'Record' to match wording in docs.
+
+
 VERSION 0.9.3 - 2011040101
 ==========================
 
