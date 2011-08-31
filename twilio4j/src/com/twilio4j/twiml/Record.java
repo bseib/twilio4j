@@ -115,8 +115,8 @@ public class Record<E extends Enum<?>> extends TwiML {
 	 * @param secondsToPressNextDigit  Allowed values: positive integer. Default value: 5.
 	 * @return  this object so more attributes may be chained.
 	 */
-	public Record<E> timeout(int secondsToPressNextDigit) {
-		this.timeout = secondsToPressNextDigit;
+	public Record<E> timeout(int secondsOfSilence) {
+		this.timeout = secondsOfSilence;
 		return this;
 	}
 	

@@ -16,6 +16,7 @@
 package com.twilio4j.twism;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -93,6 +94,15 @@ public class TwilioParameters {
 		return userParams;
 	}
 	
+	/**
+	 * Return the HttpRequest Parameter Map for debugging purposes.
+	 * 
+	 * @return the Map of parameters from the HTTP request.
+	 */
+	@SuppressWarnings("unchecked")
+	public Map getHttpParameters() {
+		return req.getParameterMap();
+	}
 
 	// Standard Voice Request Params
 
