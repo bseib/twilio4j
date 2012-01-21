@@ -99,7 +99,7 @@ public class TwilioParameters {
 	 * 
 	 * @return the Map of parameters from the HTTP request.
 	 */
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("rawtypes")
 	public Map getHttpParameters() {
 		return req.getParameterMap();
 	}
