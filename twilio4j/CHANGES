@@ -1,10 +1,11 @@
-VERSION 1.0.0 - 2012043001
+VERSION 1.0.2 - 2012043002
 ==========================
   - copied an old version of the official twilio-java sources into the project. This was done because
     the new official twilio-java has external dependencies, namely the apache http client, which does
     not work on appengine.
   - copied a version of Base64 into place so dependency is self-contained.
-
+  - updated the overview docs, explaining the inclusion of the old Twilio client lib code.
+  - regenerated javadocs with svn auto-props so that they can be served directly from googlecode.com.
 
 
 VERSION 0.9.4 - 2011083001
