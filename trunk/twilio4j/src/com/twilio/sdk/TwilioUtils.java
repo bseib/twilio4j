@@ -76,6 +76,7 @@ public class TwilioUtils {
             //compute the hmac on input data bytes
             byte[] rawHmac = mac.doFinal(data.toString().getBytes());
            
+            // changed the base64 dependency. (broc.seib@gmail.com)
             //base64-encode the hmac
             //String signature = new String(Base64.encodeBase64(rawHmac));
             String signature = new String(Base64.encodeToByte(rawHmac, false));

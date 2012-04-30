@@ -77,8 +77,8 @@ public class TwilioRestClient {
                     e.printStackTrace();
                 }
             }
-            if ( encoded.length() > 0 ) { // I put this here to fix the bug. this lib needs a rewrite...
-            	encoded =encoded.substring(1); // this (was) is a bug.. it assumes there was at least one param.
+            if ( encoded.length() > 0 ) { // I put this here to fix the bug. this lib needs a rewrite... (broc.seib@gmail.com)
+            	encoded =encoded.substring(1); // this (was) is a bug.. it assumes there was at least one param. (broc.seib@gmail.com)
             }
         }
         
@@ -95,6 +95,8 @@ public class TwilioRestClient {
             
             HttpURLConnection con = (HttpURLConnection)resturl.openConnection();
             String userpass = this.accountSid+":"+this.authToken;
+            
+            // changed the base64 dependency. (broc.seib@gmail.com)
 //            String encodeuserpass = new String(Base64.encodeBase64(userpass.getBytes()));
             String encodeuserpass = new String(Base64.encodeToByte(userpass.getBytes(), false));
             
