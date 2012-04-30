@@ -112,7 +112,7 @@ public class Record<E extends Enum<?>> extends TwiML {
 	/**
 	 * The 'timeout' attribute tells Twilio to end the recording after a number of
 	 * seconds of silence has passed. The default is 5 seconds.
-	 * @param secondsToPressNextDigit  Allowed values: positive integer. Default value: 5.
+	 * @param secondsOfSilence  Allowed values: positive integer. Default value: 5.
 	 * @return  this object so more attributes may be chained.
 	 */
 	public Record<E> timeout(int secondsOfSilence) {
