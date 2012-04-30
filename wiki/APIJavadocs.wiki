@@ -1,4 +1,0 @@
-#summary Here are the twilio4j API javadocs
-#labels Featured
-
-[http://twilio4j.googlecode.com/svn/trunk/twilio4j/javadoc/index.html]
