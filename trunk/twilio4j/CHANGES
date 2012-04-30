@@ -1,3 +1,12 @@
+VERSION 1.0.0 - 2012043001
+==========================
+  - copied an old version of the official twilio-java sources into the project. This was done because
+    the new official twilio-java has external dependencies, namely the apache http client, which does
+    not work on appengine.
+  - copied a version of Base64 into place so dependency is self-contained.
+
+
+
 VERSION 0.9.4 - 2011083001
 ==========================
 
