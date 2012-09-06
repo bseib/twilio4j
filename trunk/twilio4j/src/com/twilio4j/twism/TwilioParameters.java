@@ -246,6 +246,47 @@ public class TwilioParameters {
 			public int getDialCallDuration() { return Integer.parseInt(req.getParameter("DialCallDuration")); }
 		};
 	}
+	
+	/**
+	 * To access parameters posted by the action of the {@link com.twilio4j.twiml.Queue} verb.
+	 * @return {@link QueueParameters}
+	 */
+	public QueueParameters Queue() {
+		return new QueueParameters() {
+			public String getQueueSid() { return req.getParameter("QueueSid"); }
+			public String getCallSid() { return req.getParameter("CallSid"); }
+			public int getQueueTime() { return Integer.parseInt(req.getParameter("QueueTime")); }
+			public String getDequeueingCallSid() { return req.getParameter("DequeueingCallSid"); }
+		};
+	}
+	
+	/**
+	 * To access parameters posted by the action of the {@link com.twilio4j.twiml.Enqueue} verb.
+	 * @return {@link EnqueueParameters}
+	 */
+	public EnqueueParameters Enqueue() {
+		return new EnqueueParameters() {
+			public QueueResult getQueueResult() {
+				return QueueResult.valueOf( req.getParameter("QueueResult").replace('-', '_') );
+			}
+			public String getQueueSid() { return req.getParameter("QueueSid"); }
+			public int getQueueTime() { return Integer.parseInt(req.getParameter("QueueTime")); }
+		};
+	}
+
+	/**
+	 * To access parameters posted by the waitUrl of the {@link com.twilio4j.twiml.Enqueue} verb.
+	 * @return {@link EnqueueWaitParameters}
+	 */
+	public EnqueueWaitParameters EnqueueWait() {
+		return new EnqueueWaitParameters() {
+			public int getQueuePosition() { return Integer.parseInt(req.getParameter("QueuePosition")); }
+			public String getQueueSid() { return req.getParameter("QueueSid"); }
+			public int getQueueTime() { return Integer.parseInt(req.getParameter("QueueTime")); }
+			public int getAverageQueueTime() { return Integer.parseInt(req.getParameter("AverageQueueTime")); }
+			public int getCurrentQueueSize() { return Integer.parseInt(req.getParameter("CurrentQueueSize")); }
+		};
+	}
 
 	/**
 	 * To access parameters posted by the transcribe callback of the {@link com.twilio4j.twiml.Record} verb.

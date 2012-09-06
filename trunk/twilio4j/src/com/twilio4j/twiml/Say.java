@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 broc.seib@gentomi.com
+ * Copyright 2012 broc.seib@gentomi.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,11 +36,19 @@ public class Say extends TwiML implements NestInGather {
 	};
 	/**
 	 * Enumerated languages for the language attribute. English (en),
+	 * English with a British accent (en_gb),
 	 * Spanish (es), French (fr), and German (de) are available.
 	 * @author broc.seib@gentomi.com
 	 */
 	public enum Language {
-		en, es, fr, de
+		en("en"), en_gb("en-gb"), es("es"), fr("fr"), de("de");
+		private String abbreviation;
+		private Language(String abbreviation) {
+			this.abbreviation = abbreviation;
+		}
+		public String getAbbreviation() {
+			return abbreviation;
+		}
 	}
 
 	private String phrase;
@@ -56,7 +64,7 @@ public class Say extends TwiML implements NestInGather {
 	public void toXml(StringBuilder buf, String baseUrl) {
 		buf.append("<Say");
 		if ( voice != null ) { buf.append(" voice=\"").append(voice.name()).append("\""); }
-		if ( language != null ) { buf.append(" language=\"").append(language.name()).append("\""); }
+		if ( language != null ) { buf.append(" language=\"").append(language.getAbbreviation()).append("\""); }
 		if ( loop != null ) { buf.append(" loop=\"").append(loop.toString()).append("\""); }
 		buf.append('>');
 		buf.append(escape(phrase));

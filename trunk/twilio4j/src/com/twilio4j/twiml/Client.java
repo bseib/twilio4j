@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 broc.seib@gentomi.com
+ * Copyright 2012 broc.seib@gentomi.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +15,8 @@
  */
 package com.twilio4j.twiml;
 
+import com.twilio4j.twism.Method;
+
 
 /**
  * This class directly reflects the Conference verb documented at
@@ -28,6 +30,8 @@ package com.twilio4j.twiml;
 public class Client<E extends Enum<?>> extends TwiML implements NestInDial {
 
 	private String clientIdentifier;
+	private E url;
+	private Method method;
 	
 	/**
 	 * Converts this object into XML. This function is normally called by the state
@@ -35,7 +39,10 @@ public class Client<E extends Enum<?>> extends TwiML implements NestInDial {
 	 */
 	@Override
 	public void toXml(StringBuilder buf, String baseUrl) {
-		buf.append("<Client>");
+		buf.append("<Client");
+		if ( url != null ) { buf.append(" url=\"").append(baseUrl).append(url.name()).append("\""); }
+		if ( method != null ) { buf.append(" method=\"").append(method.name()).append("\""); }
+		buf.append('>');
 		buf.append(escape(clientIdentifier));
 		buf.append("</Client>");
 	}
@@ -61,5 +68,47 @@ public class Client<E extends Enum<?>> extends TwiML implements NestInDial {
 	public String getClientIdentifier() {
 		return clientIdentifier;
 	}
+	
+	/**
+	 * <p>The 'url' attribute allows you to specify a url for a TwiML document that will run on
+	 * the called party's end, after she answers, but before the parties are connected. You can
+	 * use this TwiML to privately play or say information to the called party, or provide a
+	 * chance to decline the phone call using {@link Gather} and {@link Hangup}. The current caller will
+	 * continue to hear ringing while the TwiML document executes on the other end. TwiML
+	 * documents executed in this manner are not allowed to contain the {@link Dial} verb.</p>
+	 * 
+	 * @param url
+	 * @return this object so more attributes may be chained.
+	 */
+	public Client<E> url(E url) {
+		this.url = url;
+		return this;
+	}
+	
+	public E getUrl() {
+		return url;
+	}
+	
+	/**
+	 * The 'method' attribute allows you to specify which HTTP method Twilio should use when
+	 * requesting the URL in the 'url' attribute. The default is POST.
+	 * 
+	 * @param method  Allowed values: Method.GET, and Method.POST. Default value: Method.POST.
+	 * @return  this object so more attributes may be chained.
+	 */
+	public Client<E> method(Method method) {
+		this.method = method;
+		return this;
+	}
+	/**
+	 * Convenience method that does the same as method(Method.POST).
+	 * @return  this object so more attributes may be chained.
+	 */
+	public Client<E> methodPOST() { return method(Method.POST); }
+	/**
+	 * Convenience method that does the same as method(Method.GET).
+	 * @return  this object so more attributes may be chained.
+	 */
+	public Client<E> methodGET() { return method(Method.GET); }
 
 }

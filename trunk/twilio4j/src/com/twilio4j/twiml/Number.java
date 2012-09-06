@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 broc.seib@gentomi.com
+ * Copyright 2012 broc.seib@gentomi.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +15,8 @@
  */
 package com.twilio4j.twiml;
 
+import com.twilio4j.twism.Method;
+
 /**
  * This class directly reflects the Number verb documented at
  * <a href="http://www.twilio.com/docs/api/twiml/number">http://www.twilio.com/docs/api/twiml/number</a>
@@ -29,6 +31,7 @@ public class Number<E extends Enum<?>> extends TwiML implements NestInDial {
 	private String number;
 	private String sendDigits; // TODO these two string *could* have user input that needs escaped so that it doesn't break the twiml parsing.
 	private E url;
+	private Method method;
 	
 	/**
 	 * Converts this object into XML. This function is normally called by the state
@@ -90,6 +93,28 @@ public class Number<E extends Enum<?>> extends TwiML implements NestInDial {
 		this.url = url;
 		return this;
 	}
+	
+	/**
+	 * <p>The 'method' attribute allows you to specify which HTTP method Twilio should use when requesting the
+	 * URL in the 'url' attribute. The default is POST.</p>
+	 * 
+	 * @param method  Allowed values: Method.GET, and Method.POST. Default value: Method.POST.
+	 * @return  this object so more attributes may be chained.
+	 */
+	public Number<E> method(Method method) {
+		this.method = method;
+		return this;
+	}
+	/**
+	 * Convenience method that does the same as method(Method.POST).
+	 * @return  this object so more attributes may be chained.
+	 */
+	public Number<E> methodPOST() { return method(Method.POST); }
+	/**
+	 * Convenience method that does the same as method(Method.GET).
+	 * @return  this object so more attributes may be chained.
+	 */
+	public Number<E> methodGET() { return method(Method.GET); }
 
 	public String getNumber() {
 		return number;
@@ -99,6 +124,12 @@ public class Number<E extends Enum<?>> extends TwiML implements NestInDial {
 	}
 	public E getUrl() {
 		return url;
+	}
+	public Method getMethod() {
+		return method;
+	}
+	public void setMethod(Method method) {
+		this.method = method;
 	}
 
 }

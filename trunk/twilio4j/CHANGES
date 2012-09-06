@@ -1,3 +1,11 @@
+VERSION 1.0.3 - 2012090501
+==========================
+  - implemented the newly announced <Queue>, <Enqueue>, and <Leave> noun/verbs.
+  - added en_gb as a language choice in the <Say> verb.
+  - added the 'record' attribute to the <Dial> verb.
+  - added the 'method' attribute to the <Number> noun.
+  - added the 'url' and 'method' attributes to the <Client> noun.
+
 VERSION 1.0.2 - 2012043002
 ==========================
   - copied an old version of the official twilio-java sources into the project. This was done because
