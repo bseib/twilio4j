@@ -19,15 +19,19 @@ import java.util.HashMap;
 
 import javax.servlet.ServletException;
 
+import com.twilio4j.twiml.Client;
 import com.twilio4j.twiml.Conference;
 import com.twilio4j.twiml.Dial;
+import com.twilio4j.twiml.Enqueue;
 import com.twilio4j.twiml.Gather;
 import com.twilio4j.twiml.Hangup;
+import com.twilio4j.twiml.Leave;
 import com.twilio4j.twiml.NestInDial;
 import com.twilio4j.twiml.NestInGather;
 import com.twilio4j.twiml.Number;
 import com.twilio4j.twiml.Pause;
 import com.twilio4j.twiml.Play;
+import com.twilio4j.twiml.Queue;
 import com.twilio4j.twiml.Record;
 import com.twilio4j.twiml.Redirect;
 import com.twilio4j.twiml.Reject;
@@ -432,6 +436,14 @@ abstract public class TwilioStateMachineServlet<E extends Enum<?>> extends Twili
 		return new Number<E>(number);
 	}
 	/**
+	 * Inserts a {@link com.twilio4j.twiml.Client} verb into your TwiML.
+	 * @param clientIdentifier  the client identifier to dial to.
+	 * @return a {@link com.twilio4j.twiml.Client} object for chaining attributes.
+	 */
+	final public Client<E> client(String clientIdentifier) {
+		return new Client<E>(clientIdentifier);
+	}
+	/**
 	 * Inserts a {@link com.twilio4j.twiml.Conference} verb into your TwiML.
 	 * @param roomName  the name of the conference call room.
 	 * @return a {@link com.twilio4j.twiml.Conference} object for chaining attributes.
@@ -440,6 +452,33 @@ abstract public class TwilioStateMachineServlet<E extends Enum<?>> extends Twili
 	 */
 	final public Conference<E> conference(String roomName) {
 		return new Conference<E>(roomName);
+	}
+	/**
+	 * Inserts a {@link com.twilio4j.twiml.Queue} verb into your TwiML.
+	 * @param queueName  the name of the call queue.
+	 * @return a {@link com.twilio4j.twiml.Queue} object for chaining attributes.
+	 * @see com.twilio4j.twiml.Queue
+	 * @see com.twilio4j.twiml.Dial
+	 */
+	final public Queue<E> queue(String queueName) {
+		return new Queue<E>(queueName);
+	}
+	/**
+	 * Inserts a {@link com.twilio4j.twiml.Enqueue} verb into your TwiML.
+	 * @param queueName the name of the queue to queue a call onto.
+	 * @return a {@link com.twilio4j.twiml.Enqueue} object for chaining attributes.
+	 * @see com.twilio4j.twiml.Enqueue
+	 */
+	final public Enqueue<E> enqueue(String queueName) {
+		return new Enqueue<E>(queueName);
+	}
+	/**
+	 * Inserts a {@link com.twilio4j.twiml.Leave} verb into your TwiML.
+	 * @return a {@link com.twilio4j.twiml.Leave} object for chaining attributes.
+	 * @see com.twilio4j.twiml.Leave
+	 */
+	final public Leave leave() {
+		return new Leave();
 	}
 	/**
 	 * Inserts a {@link com.twilio4j.twiml.Hangup} verb into your TwiML.

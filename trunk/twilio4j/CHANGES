@@ -1,4 +1,4 @@
-VERSION 1.0.3 - 2012090501
+VERSION 1.0.3 - 2012090502
 ==========================
   - implemented the newly announced <Queue>, <Enqueue>, and <Leave> noun/verbs.
   - added en_gb as a language choice in the <Say> verb.
