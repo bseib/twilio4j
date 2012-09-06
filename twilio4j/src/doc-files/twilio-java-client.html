@@ -1,0 +1,29 @@
+<html>
+<head></head>
+<body>
+
+<h2>Twilio java client library</h2>
+
+<p>I have copied into this project and older copy of the com.twilio.sdk sources for the <b>Twilio java client library</b> from Twilio.
+This code is the original <b>Twilio java client library</b> (it is 99% written by Twilio, with a couple minor bug fixes.)</p>
+
+<p>Why include this here? Primarily because the <a href="https://github.com/twilio/twilio-java">
+present day official Twilio-java library</a> has third
+party dependencies that do not run on AppEngine, and, well, I'd like to have a drop-in jar to run a Twilio client on app-engine. </p>
+
+<p>I also happen to dislike the sprawl of external dependencies; it makes it a bit harder to grab the jar and be productive. I am also
+annoyed by the use of maven. Sorry -- I love you Twilio guys, but I have <i>very</i> little love for maven.</p>
+
+
+<h2>Javadocs</h2>
+<p>
+The javadocs for the original <b>Twilio java client library</b> are in the
+<a href="http://twilio4j.googlecode.com/svn/trunk/twilio4j/javadoc/com/twilio/sdk/package-summary.html">com.twilio.sdk namespace.</a>
+These docs are somewhat sparse and could use some more flesh. My advice is to download the sources for twilio4j and look at
+TwilioRestClient.java and TwilioRestExample.java. All the .java files in com.twilio.sdk.verbs have a one-to-one match with the
+<a href="http://www.twilio.com/docs/api/rest">docs at twilio.com</a>.</p>
+
+<p>The proper next step would be to provide a GAE-friendly patch to the official twilio-java project on github.</p>
+
+</body>
+</html>

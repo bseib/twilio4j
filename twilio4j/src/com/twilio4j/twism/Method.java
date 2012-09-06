@@ -15,9 +15,18 @@
  */
 package com.twilio4j.twism;
 
+
 /**
  * Enumerated values for HTTP methods that may be used with
  * an 'action' or 'callback'. Available values are 'GET', and 'POST'.
+ * 
+ * This enum is used to specify the http call method as GET or POST for several TwiML
+ * verbs: {@link com.twilio4j.twiml.Gather}, {@link com.twilio4j.twiml.Record},
+ * {@link com.twilio4j.twiml.Sms}, {@link com.twilio4j.twiml.Dial}, 
+ * 
+ * and these nouns: {@link com.twilio4j.twiml.Number}, {@link com.twilio4j.twiml.Client},
+ * and {@link com.twilio4j.twiml.Queue}.  
+ * 
  * @author broc.seib@gentomi.com
  */
 public enum Method {

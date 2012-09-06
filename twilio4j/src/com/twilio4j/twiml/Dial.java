@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 broc.seib@gentomi.com
+ * Copyright 2012 broc.seib@gentomi.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -39,6 +39,7 @@ public class Dial<E extends Enum<?>> extends TwiML {
 	private Boolean hangupOnStar;
 	private Integer timeLimit;
 	private String callerId;
+	private Boolean record;
 	
 	/**
 	 * Converts this object into XML. This function is normally called by the state
@@ -53,6 +54,7 @@ public class Dial<E extends Enum<?>> extends TwiML {
 		if ( hangupOnStar != null ) { buf.append(" hangupOnStar=\"").append(hangupOnStar.toString()).append("\""); }
 		if ( timeLimit != null ) { buf.append(" timeLimit=\"").append(timeLimit.toString()).append("\""); }
 		if ( callerId != null ) { buf.append(" callerId=\"").append(callerId).append("\""); }
+		if ( record != null ) { buf.append(" record=\"").append(record.toString()).append("\""); }
 		buf.append('>');
 		for ( ToXML t : nestedNouns ) {
 			t.toXml(buf, baseUrl);
@@ -218,6 +220,19 @@ public class Dial<E extends Enum<?>> extends TwiML {
 		this.callerId = callerId;
 		return this;
 	}
+	
+	/**
+	 * <p>The 'record' attribute lets you record both legs of a call within the associated {@link Dial} verb.
+	 * When set to true, a RecordingUrl parameter will be sent to the 'action' URL on the associated {@link Dial}
+	 * verb. You must set an 'action' URL to receive the RecordingUrl.</p>
+	 * 
+	 * @param doRecord  Allowed values: true, false. Default value: false.
+	 * @return  this object so more attributes may be chained.
+	 */
+	public Dial<E> record(boolean doRecord) {
+		this.record = doRecord;
+		return this;
+	}
 
 	public List<NestInDial> getNestedNouns() {
 		return nestedNouns;
@@ -260,6 +275,12 @@ public class Dial<E extends Enum<?>> extends TwiML {
 	}
 	public void setCallerId(String callerId) {
 		this.callerId = callerId;
+	}
+	public Boolean getRecord() {
+		return record;
+	}
+	public void setRecord(Boolean record) {
+		this.record = record;
 	}
 
 }
