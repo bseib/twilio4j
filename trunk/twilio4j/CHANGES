@@ -1,6 +1,7 @@
-VERSION 1.0.3 - 2012090502
+VERSION 1.0.3 - 2012090601
 ==========================
   - implemented the newly announced <Queue>, <Enqueue>, and <Leave> noun/verbs.
+  - implemented an example CallCenterServlet to demonstrate the use of <Queue>.
   - added en_gb as a language choice in the <Say> verb.
   - added the 'record' attribute to the <Dial> verb.
   - added the 'method' attribute to the <Number> noun.
