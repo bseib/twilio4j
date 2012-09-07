@@ -5,8 +5,7 @@
 I have copied into this project and older copy of the com.twilio.sdk sources for the Twilio java client library from Twilio.
 This code is the original Twilio java client library (it is 99% written by Twilio, with a couple minor bug fixes.)
 
-Why include this here? Primarily because the [https://github.com/twilio/twilio-java 
-present day official Twilio-java library] has third
+Why include this here? Primarily because the [https://github.com/twilio/twilio-java present day official Twilio-java library] has third
 party dependencies that do not run on AppEngine, and, well, I'd like to have a drop-in jar to run a Twilio client on app-engine.
 
 I also happen to dislike the sprawl of external dependencies; it makes it a bit harder to grab the jar and be productive. I am also
