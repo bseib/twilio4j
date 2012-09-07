@@ -15,123 +15,52 @@
  */
 package com.twilio4j.twism.eg;
 
-import java.util.logging.Logger;
+import static com.twilio4j.twism.eg.CallCenterState.H_CALL_CENTER_AGENT;
+import static com.twilio4j.twism.eg.CallCenterState.H_CALL_CENTER_HOTLINE;
+import static com.twilio4j.twism.eg.CallCenterState.H_HOLD_MUSIC;
 
 import com.twilio4j.twiml.TwiML;
-import com.twilio4j.twism.RecordParameters;
 import com.twilio4j.twism.TwilioParameters;
 import com.twilio4j.twism.TwilioStateMachineServlet;
 
-import static com.twilio4j.twism.eg.VoiceRecordState.*;
+/*
+ *  Watch a Screencast from Twilio introducing Queue here: http://www.youtube.com/watch?v=AICLFi2djbs
+ *  To start watching at the interesting part with the code, start at 5:15:  http://youtu.be/AICLFi2djbs?t=5m15s
+ */
 
-
-public class CallCenterServlet extends TwilioStateMachineServlet<VoiceRecordState> {
+public class CallCenterServlet extends TwilioStateMachineServlet<CallCenterState> {
 	private static final long serialVersionUID = 1L;
 	
-	final static private Logger logger = Logger.getLogger(CallCenterServlet.class.getSimpleName());
+//	final static private Logger logger = Logger.getLogger(CallCenterServlet.class.getSimpleName());
 
-	final static private String U_RECORDING_URL = "U_RECORDING_URL";
-	
+	final static private String ELEVATOR_MUSIC = "http://twilio4j.googlecode.com/svn/trunk/twilio4j/misc/mp3/ipanema.mp3";
+	final static private String CALL_CENTER_QUEUE_NAME = "CallCenterQueue";
+
 	public CallCenterServlet() {
 		
-		handler(H_GATHER_CALL_IN_CODE).respondsWith(
-			gather(
-				say("Enter your 6 digit code.").voiceWOMAN()
-			)
-			.numDigits(6)
-			.action(H_CHECK_CALL_IN_CODE)
+		handler(H_CALL_CENTER_HOTLINE).respondsWith(
+			enqueue(CALL_CENTER_QUEUE_NAME).waitUrl(H_HOLD_MUSIC)
 		);
 
-		handler(H_CHECK_CALL_IN_CODE).respondsWith(new TwilioHandler() {
+		handler(H_HOLD_MUSIC).respondsWith(new TwilioHandler() {
 			@Override
 			public TwiML getTwiML(TwilioParameters params) {
-				String digits = params.Gather().getDigits();
-				if ( isValidated(digits) ) {
-					return redirect(H_RECORD_MESSAGE);
-				} else {
-					// increment number of attempts made
-					// if too many, then go to a bailout state
-					return response(
-						say("That call in code is not valid. You may try again."),
-						redirect(H_GATHER_CALL_IN_CODE)
-					);
-				}
+				int position = params.EnqueueWait().getQueuePosition();
+				return response(
+					say("You are number "+position+" in the queue. Please hold.").voiceWOMAN(),
+					play(ELEVATOR_MUSIC)
+				);
 			}
 		});
 		
-		handler(H_RECORD_MESSAGE).respondsWith(
+		handler(H_CALL_CENTER_AGENT).respondsWith(
 			response(
-				say("After the beep, record your outbound message. Press pound when done.").voiceWOMAN(),
-				record().finishOnKeyHash().maxLength(120).action(H_REVIEW_MESSAGE)
+				dial(
+					queue(CALL_CENTER_QUEUE_NAME)
+				)
 			)
 		);
 		
-		handler(H_REVIEW_MESSAGE).respondsWith(new TwilioHandler() {
-			@Override
-			public TwiML getTwiML(TwilioParameters params) {
-				RecordParameters rp = params.Record();
-				if ( rp.isHangup() ) {
-					doAbandonedCallCleanup();
-					return hangup();
-				} else {
-					String recordingUrl = rp.getRecordingUrl();
-					params.getUserParams().put(U_RECORDING_URL, recordingUrl); // save the recording url for another state.
-					return gather(
-						say("Review your message.").voiceWOMAN(),
-						play(recordingUrl),
-						say("Press 1 to accept this recording. Press 2 to record the message again.").voiceWOMAN()
-					)
-					.numDigits(1)
-					.action(H_REVIEW_MESSAGE_CHOICE);
-				}
-			}
-		});
-
-		handler(H_REVIEW_MESSAGE_CHOICE).respondsWith(new TwilioHandler() {
-			@Override
-			public TwiML getTwiML(TwilioParameters params) {
-				String digits = params.Gather().getDigits();
-				if ( "1".equals(digits) ) {
-					return redirect(H_MESSAGE_READY_GOODBYE);
-				}
-				else if ( "2".equals(digits) ) {
-					return redirect(H_RECORD_MESSAGE);
-				}
-				else {
-					return gather(
-						say("Press 1 to accept this recording. Press 2 to record the message again.").voiceWOMAN()
-					)
-					.numDigits(1)
-					.action(H_REVIEW_MESSAGE_CHOICE);
-				}
-			}
-		});
-		
-		handler(H_MESSAGE_READY_GOODBYE).respondsWith(new TwilioHandler() {
-			@Override
-			public TwiML getTwiML(TwilioParameters params) {
-				String recordingUrl = params.getUserParams().get(U_RECORDING_URL);
-				logger.info("recordingUrl="+recordingUrl);
-				return say("The recorded message is now ready. Goodbye.").voiceWOMAN();
-			}
-		});
-
-		callback(C_HANGUP).executes(new TwilioCallback() {
-			@Override
-			public void execute(TwilioParameters params) {
-				// do cleanup stuff here...
-			}
-		});
-	}
-
-	protected void doAbandonedCallCleanup() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	protected boolean isValidated(String digits) {
-		// TODO Auto-generated method stub
-		return true;
 	}
 	
 	
@@ -145,13 +74,13 @@ public class CallCenterServlet extends TwilioStateMachineServlet<VoiceRecordStat
 	}
 
 	@Override
-	public VoiceRecordState getInitialState(TwilioParameters params) {
-		return H_GATHER_CALL_IN_CODE;
+	public CallCenterState getInitialState(TwilioParameters params) {
+		return CallCenterState.H_CALL_CENTER_HOTLINE;
 	}
 
 	@Override
-	public VoiceRecordState lookupState(String pathInfo) {
-		return VoiceRecordState.valueOf(pathInfo);
+	public CallCenterState lookupState(String pathInfo) {
+		return CallCenterState.valueOf(pathInfo);
 	}
 
 }
