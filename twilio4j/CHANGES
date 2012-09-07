@@ -1,4 +1,4 @@
-VERSION 1.0.3 - 2012090601
+VERSION 1.0.4 - 2012090602
 ==========================
   - implemented the newly announced <Queue>, <Enqueue>, and <Leave> noun/verbs.
   - implemented an example CallCenterServlet to demonstrate the use of <Queue>.
