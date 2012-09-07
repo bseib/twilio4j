@@ -2,8 +2,8 @@
 
 == Twilio java client library ==
 
-I have copied into this project and older copy of the com.twilio.sdk sources for the *Twilio java client library* from Twilio.
-This code is the original *Twilio java client library* (it is 99% written by Twilio, with a couple minor bug fixes.)
+I have copied into this project and older copy of the com.twilio.sdk sources for the Twilio java client library from Twilio.
+This code is the original Twilio java client library (it is 99% written by Twilio, with a couple minor bug fixes.)
 
 Why include this here? Primarily because the [https://github.com/twilio/twilio-java 
 present day official Twilio-java library] has third
@@ -15,7 +15,7 @@ annoyed by the use of maven. Sorry -- I love you Twilio guys, but I have _very_ 
 
 == Javadocs ==
 
-The javadocs for the original *Twilio java client library* are in the
+The javadocs for the original Twilio java client library are in the
 [http://twilio4j.googlecode.com/svn/trunk/twilio4j/javadoc/com/twilio/sdk/package-summary.html com.twilio.sdk namespace.] These docs are somewhat sparse and could use some more flesh. My advice is to download the sources for twilio4j and look at
 TwilioRestClient.java and TwilioRestExample.java. All the .java files in com.twilio.sdk.verbs have a one-to-one match with the
 [http://www.twilio.com/docs/api/rest docs at twilio.com].
