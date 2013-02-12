@@ -15,4 +15,4 @@ I am also thinking about using Jersey to accomplish this, since it already has m
 
 Jersey 2.0 cleans up their built-in dependency injection, so perhaps we shall wait until it is available.
 
-Send me your thoughts and comments if you have any.
+Share your thoughts and comments here if you have any.
