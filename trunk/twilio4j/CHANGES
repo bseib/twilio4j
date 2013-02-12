@@ -1,3 +1,14 @@
+VERSION 1.0.5 - 2013021201
+  - add missing parameters to TwilioParameters, specifically:
+      - CallerName
+      - RecordingUrl
+      - RecordingSid
+      - RecordingDuration
+  - require slf4j-1.7.x (or higher version) for logging
+  - add slf4j debug logging in TwilioStateMachineServletBase
+  - require JRE 1.7
+  - build the distribution files and javadocs with Ant
+
 VERSION 1.0.4 - 2012090602
 ==========================
   - implemented the newly announced <Queue>, <Enqueue>, and <Leave> noun/verbs.

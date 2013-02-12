@@ -1,2 +1,3 @@
-2012090602
-1.0.4
+## this properties file is read by ant when doing a build
+datestamp = 2013021201
+version = 1.0.5
