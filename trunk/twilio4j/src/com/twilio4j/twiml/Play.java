@@ -48,6 +48,9 @@ public class Play extends TwiML implements NestInGather {
 	 * @param audioUrl  The URL of an audio file that Twilio will retrieve and play to the caller.</p>
 	 */
 	public Play(String audioUrl) {
+		if ( null == audioUrl ) {
+			throw new IllegalArgumentException("The audio URL cannot be null");
+		}
 		this.audioUrl = audioUrl;
 	}
 	

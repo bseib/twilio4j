@@ -79,6 +79,9 @@ public class Say extends TwiML implements NestInGather {
 	 * @param phrase  The text Twilio will read to the caller. Limited to 4KB.
 	 */
 	public Say(String phrase) {
+		if ( null == phrase ) {
+			throw new IllegalArgumentException("The phrase cannot be null");
+		}
 		this.phrase = phrase;
 	}
 	

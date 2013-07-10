@@ -63,6 +63,9 @@ public class Queue<E extends Enum<?>> extends TwiML implements NestInDial {
 	 * @see com.twilio4j.twism.TwilioParameters
 	 */
 	public Queue(String queueName) {
+		if ( null == queueName ) {
+			throw new IllegalArgumentException("The queue name cannot be null");
+		}
 		this.queueName = queueName;
 	}
 	

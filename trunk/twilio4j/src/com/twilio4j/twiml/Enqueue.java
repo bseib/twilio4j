@@ -57,7 +57,7 @@ public class Enqueue<E extends Enum<?>> extends TwiML {
 		}
 		if ( waitUrlMethod != null ) { buf.append(" waitMethod=\"").append(waitUrlMethod.name()).append("\""); }
 		buf.append('>');
-		buf.append(queueName);
+		buf.append(escape(queueName));
 		buf.append("</Enqueue>");
 	}
 	
@@ -78,6 +78,9 @@ public class Enqueue<E extends Enum<?>> extends TwiML {
 	 * @param queueName
 	 */
 	public Enqueue(String queueName) {
+		if ( null == queueName ) {
+			throw new IllegalArgumentException("The queue name cannot be null");
+		}
 		this.queueName = queueName;
 	}
 	

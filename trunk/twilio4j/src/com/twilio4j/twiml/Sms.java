@@ -62,6 +62,9 @@ public class Sms<E extends Enum<?>> extends TwiML {
 	 * @param message  The message to be sent via SMS.
 	 */
 	public Sms(String message) {
+		if ( null == message ) {
+			throw new IllegalArgumentException("The message cannot be null");
+		}
 		this.message = message;
 	}
 	
