@@ -85,6 +85,9 @@ public class Conference<E extends Enum<?>> extends TwiML implements NestInDial {
 	 * @param roomName  The name of the conference room.
 	 */
 	public Conference(String roomName) {
+		if ( null == roomName ) {
+			throw new IllegalArgumentException("The room name cannot be null");
+		}
 		this.roomName = roomName;
 	}
 	

@@ -62,6 +62,9 @@ public class Client<E extends Enum<?>> extends TwiML implements NestInDial {
 	 * @param clientIdentifier  The identifier for the client.
 	 */
 	public Client(String clientIdentifier) {
+		if ( null == clientIdentifier ) {
+			throw new IllegalArgumentException("The client identifier cannot be null");
+		}
 		this.clientIdentifier = clientIdentifier;
 	}
 	

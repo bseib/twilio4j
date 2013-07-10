@@ -57,6 +57,9 @@ public class Number<E extends Enum<?>> extends TwiML implements NestInDial {
 	 * @param number  Allowed values: a valid phone number.
 	 */
 	public Number(String number) {
+		if ( null == number ) {
+			throw new IllegalArgumentException("The number cannot be null");
+		}
 		this.number = number;
 	}
 	
