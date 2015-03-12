@@ -1,0 +1,112 @@
+# Introduction #
+
+Twilio4j consists of a servlet that will drive a state machine. You supply the state machine by extending the TwilioStateMachineServlet class (which itself is a ultimately a subclass of HttpServlet). In order to create your subclass, you first need to create an Enum that enumerates all the possible states of your state machine.
+
+You will also add an entry to your web.xml file to map a servletPath to your new state machine class.
+
+## 1) Create an Enum for the States ##
+
+Example:
+```
+public enum NumberGameState {
+	PICK_NUMBER,
+	CHECK_NUMBER,
+}
+```
+
+## 2) Create a subclass of TwilioStateMachineServlet ##
+
+Note that your enumerated type is used to "type" the TwilioStateMachineServlet.
+
+Also note the static import to conveniently allow you to refer to the states without their classname. This is certainly not required.
+
+```
+import com.twilio4j.twiml.TwiML;
+import com.twilio4j.twism.TwilioParameters;
+import com.twilio4j.twism.TwilioStateMachineServlet;
+
+import static com.twilio4j.twism.eg.NumberGameState.*;
+
+public class NumberGameStateMachineServlet extends TwilioStateMachineServlet<NumberGameState> {
+	private static final long serialVersionUID = 1L;
+	
+	public NumberGameStateMachineServlet() {
+		handler(PICK_NUMBER).respondsWith(
+			gather(
+				say("pick a number between zero and nine.")
+			)
+			.action(CHECK_NUMBER)
+			.numDigits(1)
+		);
+		handler(CHECK_NUMBER).respondsWith(new TwilioHandler() {
+			@Override
+			public TwiML getTwiML(TwilioParameters params) {
+				char digit = params.Gather().getDigits().charAt(0);
+				if ( digit == '5' ) {
+					return say("You win! Goodbye.");
+				} else if ( digit < '5' ) {
+					return gather(
+						say("Pick again, higher.")
+					)
+					.action(CHECK_NUMBER)
+					.numDigits(1);
+				} else {
+					return gather(
+						say("Pick again, lower.")
+					)
+					.action(CHECK_NUMBER)
+					.numDigits(1);
+				}
+			}
+		});
+	}
+
+	@Override
+	public NumberGameState getInitialState() {
+		return PICK_NUMBER;
+	}
+
+	@Override
+	public NumberGameState lookupState(String pathInfo) {
+		return NumberGameState.valueOf(pathInfo);
+	}
+
+	@Override
+        // this is used in digital signature of a cookie.
+        // supply any long "random" string >= 40 characters.
+	public String getFortyCharacterSecret() {
+		return "6710e0fa2eae0a28e5dc58d76793eb151c19a927";
+	}
+
+}
+```
+
+## 3) map your state machine to a servlet path ##
+
+Edit your web.xml file, adding a mapping of your new state machine class to the servlet path of your choice.
+
+Example:
+
+```
+	<servlet>
+		<description>Twilio Number Game Servlet</description>
+		<display-name>NumberGameServlet</display-name>
+		<servlet-name>NumberGameServlet</servlet-name>
+		<servlet-class>com.twilio4j.twism.eg.NumberGameStateMachineServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>NumberGameServlet</servlet-name>
+		<url-pattern>/ngs/*</url-pattern>
+	</servlet-mapping>
+```
+
+## 4) Point your Twilio voice handler to your new servlet ##
+
+I.e., from https://www.twilio.com/user/account/phone-numbers/ , edit your number and supply the url of your new servlet:
+
+```
+Voice URL:  http://www.yourhost.dom/ngs
+```
+
+## 5) Call your Twilio phone number and try it out! ##
