@@ -136,11 +136,11 @@ abstract public class TwilioStateMachineServlet<E extends Enum<?>> extends Twili
 			}
 			String contextPath = tp.getRequest().getContextPath();
 			String servletPath = tp.getRequest().getServletPath();
-			String baseUrl;
+			String baseUrl = getBaseUrl();
 			if ( contextPath.endsWith("/") ) {
-				baseUrl = contextPath + servletPath.substring(1) + "/";
+				baseUrl = baseUrl + contextPath + servletPath.substring(1) + "/";
 			} else {
-				baseUrl = contextPath + servletPath + "/";
+				baseUrl = baseUrl + contextPath + servletPath + "/";
 			}
 			return twiml.toXml(baseUrl);
 		} else {
@@ -152,6 +152,54 @@ abstract public class TwilioStateMachineServlet<E extends Enum<?>> extends Twili
 				throw new ServletException("No such state handler found.");
 			}
 		}
+	}
+	
+	/**
+	 * <p>
+	 * When you subclass TwilioStateMachine you can optionally supply the base URL
+	 * that will be prepended to all urls in the generated TwiML. This is the
+	 * hostname part of the URL, and in some circumstances a leading path. E.g.</p>
+	 * 
+	 * <code>
+	 * <pre>
+	 *   http://www.domain.com/
+	 *   http://www.domain.com/xyz
+	 * </pre>
+	 * </code>
+	 * 
+	 * <p>You SHOULD NOT include the servlet context and servlet path in the base url.
+	 * For example if you declare a servlet like this:</p>
+	 * 
+	 * <code>
+	 * <pre>
+	 *   \@WebServlet(name = "DandyServlet", urlPatterns = { "/ab/cd", "/ab/cd/*" })
+	 * </pre>
+	 * </code>
+	 * 
+	 * <p>then your baseUrl shold NOT contain the /ab or /cd parts since those will
+	 * already be added automatically.</p>
+	 *  
+	 * <p>Note that this call normally returns an empty string, meaning that the urls
+	 * in the TwiML are all relative paths. This is the normal case.</p>
+	 * 
+	 * <p>Where you would want to override this and return your own base URL is during
+	 * development when you might be proxying a connection from an outside server
+	 * (because it handles the SSL, etc) and so your proxy URL might have a leading
+	 * path that your servlet container doesn't know anything about. I.e.</p>
+	 * 
+	 * <code>
+	 * <pre>
+	 *   http://www.domain.com/proxy/ab/cd
+	 * </pre>
+	 * </code>
+	 * 
+	 * <p>Then your normal (relative path) TwiML would all start with /ab/cd, which will
+	 * break because it *should* begin with /proxy/ab/cd.</p>
+	 * 
+	 * @return
+	 */
+	public String getBaseUrl() {
+		return "";
 	}
 
 	/**
