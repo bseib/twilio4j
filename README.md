@@ -18,11 +18,11 @@ Read the [Quick Start](https://github.com/bseib/twilio4j/wiki/Quick-Start) to ge
     // This coding style is type-safe, has a declarative appearance,
     // and will produce well-formed TwiML.
 
-    handler(PICK_NUMBER).respondsWith(   // resides http://server.dom/some/path/PICK_NUMBER
+    handler(PICK_NUMBER).respondsWith(   // http://example.com/some/path/PICK_NUMBER
         gather(
             say("pick a number between zero and nine.")
         )
-        .action(CHECK_NUMBER)            // refers http://server.dom/some/path/CHECK_NUMBER
+        .action(CHECK_NUMBER)            // http://example.com/some/path/CHECK_NUMBER
         .numDigits(1)
     );
 ````
