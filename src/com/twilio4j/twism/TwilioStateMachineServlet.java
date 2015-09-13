@@ -199,7 +199,7 @@ abstract public class TwilioStateMachineServlet<E extends Enum<?>> extends Twili
 	 * <p>Then your normal (relative path) TwiML would all start with /ab/cd, which will
 	 * break because it *should* begin with /proxy/ab/cd.</p>
 	 * 
-	 * @return
+	 * @return by default, return an empty string. subclass can override.
 	 */
 	public String getBaseUrl() {
 		return "";
