@@ -14,8 +14,8 @@
       <h1 class="project-name">Twilio4j</h1>
       <h2 class="project-tagline">Java library for creating state machine call flows for Twilio</h2>
       <a href="https://github.com/bseib/twilio4j" class="btn">View on GitHub</a>
-      <a href="https://bseib.github.io/twilio4j/dist/lib/twilio4j-1.0.7.jar" class="btn">Download .jar</a>
-      <a href="https://bseib.github.io/twilio4j/dist/lib/twilio4j-1.0.7-src.jar" class="btn">Download src.jar</a>
+      <a href="https://bseib.github.io/twilio4j/dist/lib/twilio4j-1.0.8.jar" class="btn">Download .jar</a>
+      <a href="https://bseib.github.io/twilio4j/dist/lib/twilio4j-1.0.8-src.jar" class="btn">Download src.jar</a>
     </section>
 
     <section class="main-content">
@@ -46,11 +46,11 @@
 <div class="highlight highlight-java"><pre>    <span class="pl-c">// This coding style is type-safe, has a declarative appearance,</span>
     <span class="pl-c">// and will produce well-formed TwiML.</span>
 
-    handler(<span class="pl-c1">PICK_NUMBER</span>)<span class="pl-k">.</span>respondsWith(   <span class="pl-c">// resides http://server.dom/some/path/PICK_NUMBER</span>
+    handler(<span class="pl-c1">PICK_NUMBER</span>)<span class="pl-k">.</span>respondsWith(   <span class="pl-c">// http://example.com/some/path/PICK_NUMBER</span>
         gather(
             say(<span class="pl-s"><span class="pl-pds">"</span>pick a number between zero and nine.<span class="pl-pds">"</span></span>)
         )
-        .action(<span class="pl-c1">CHECK_NUMBER</span>)            <span class="pl-c">// refers http://server.dom/some/path/CHECK_NUMBER</span>
+        .action(<span class="pl-c1">CHECK_NUMBER</span>)            <span class="pl-c">// http://example.com/some/path/CHECK_NUMBER</span>
         .numDigits(<span class="pl-c1">1</span>)
     );</pre></div>
 
