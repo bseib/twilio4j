@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 broc.seib@gentomi.com
+ * Copyright 2015 broc.seib@gentomi.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -161,7 +161,7 @@ public class Sms<E extends Enum<?>> extends TwiML {
 	 * 
 	 * <p>The 'statusCallback' attribute takes a URL as an argument. When the SMS message is actually sent, or
 	 * if sending fails, Twilio will make an asynchronous POST request to this URL with the parameters 'SmsStatus' and
-	 * 'SmsSid'. Note, 'statusCallback' always uses HTTP POST to request the given url.</p>
+	 * 'MessageSid'. Note, 'statusCallback' always uses HTTP POST to request the given url.</p>
 	 * 
 	 * <p>With its request to the 'statusCallback' URL, Twilio will pass the related parameters in
 	 * {@link com.twilio4j.twism.SmsParameters},
