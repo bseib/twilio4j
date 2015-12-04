@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 broc.seib@gentomi.com
+ * Copyright 2015 broc.seib@gentomi.com
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -236,16 +236,22 @@ public class TwilioParameters {
 	// Standard Sms Request Params. (AccountSid, From and To overlap with Voice Params)
 
 	/**
+	 * Now you should call Sms().getMessageSid() instead.
+	 * 
 	 * @return A 34 character unique identifier for the message. May be used to later retrieve this message from the
 	 *         REST API.
 	 */
+	@Deprecated
 	public String getSmsSid() {
 		return req.getParameter("SmsSid");
 	}
 
 	/**
+	 * Now you should call Sms().getBody() instead.
+	 * 
 	 * @return The text body of the SMS message. Up to 160 characters long.
 	 */
+	@Deprecated
 	public String getBody() {
 		return req.getParameter("Body");
 	}
@@ -355,12 +361,42 @@ public class TwilioParameters {
 	 */
 	public SmsParameters Sms() {
 		return new SmsParameters() {
+			public String getMessageSid() {
+				return req.getParameter("MessageSid");
+			}
+
+			@Deprecated
 			public String getSmsSid() {
 				return req.getParameter("SmsSid");
 			}
 
 			public String getSmsStatus() {
 				return req.getParameter("SmsStatus");
+			}
+
+			@Override
+			public String getMessagingServiceSid() {
+				return req.getParameter("MessagingServiceSid");
+			}
+
+			@Override
+			public String getBody() {
+				return req.getParameter("Body");
+			}
+
+			@Override
+			public int getNumMedia() {
+				return Integer.parseInt(req.getParameter("NumMedia"));
+			}
+
+			@Override
+			public String getMediaContentType(int n) {
+				return req.getParameter("MediaContentType" + n);
+			}
+
+			@Override
+			public String getMediaUrl(int n) {
+				return req.getParameter("MediaUrl" + n);
 			}
 		};
 	}
