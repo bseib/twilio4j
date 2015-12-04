@@ -31,9 +31,7 @@ import com.twilio4j.twism.TwilioStateMachineServlet;
 public class CallCenterServlet extends TwilioStateMachineServlet<CallCenterState> {
 	private static final long serialVersionUID = 1L;
 	
-//	final static private Logger logger = Logger.getLogger(CallCenterServlet.class.getSimpleName());
-
-	final static private String ELEVATOR_MUSIC = "http://twilio4j.googlecode.com/svn/trunk/twilio4j/misc/mp3/ipanema.mp3";
+	final static private String ELEVATOR_MUSIC = "http://bseib.github.io/twilio4j/mp3/ipanema.mp3";
 	final static private String CALL_CENTER_QUEUE_NAME = "CallCenterQueue";
 
 	public CallCenterServlet() {

@@ -28,6 +28,9 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
+
 import com.twilio4j.util.Base64;
 
 /**
@@ -41,8 +44,8 @@ import com.twilio4j.util.Base64;
  * @author broc.seib@gentomi.com
  */
 public class CookieTwism {
-	
-//	final static private Logger logger = Logger.getLogger(CookieSignup.class.getSimpleName());
+
+//	final static private Logger logger = LoggerFactory.getLogger(CookieTwism.class);
 
 	final static private String COOKIE_NAME = "twism";
 
@@ -63,8 +66,8 @@ public class CookieTwism {
 	}
 	
 	public void verifyPayload(String cookieProof) throws CookieTamperedException {
-//		logger.info("actual cookie payload: " + this.cookiePayload);
-//		logger.info("cookie payload proof arg: " + setupCookiePayloadProof);
+//		logger.debug("actual cookie payload: " + this.cookiePayload);
+//		logger.debug("cookie payload proof arg: " + setupCookiePayloadProof);
 		if ( ! cookieProof.equals(this.cookiePayload) ) {
 			throw new CookieTamperedException("Cookie payload does not match for verification.");
 		}

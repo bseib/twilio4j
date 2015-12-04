@@ -17,12 +17,14 @@ package com.twilio4j.twiml;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 public class TwiML implements ToXML {
-	
-	final static private Logger logger = Logger.getLogger(TwiML.class.getSimpleName()); 
+
+	final static private Logger logger = LoggerFactory.getLogger(TwiML.class);
 	
 	private List<TwiML> nested;
 
@@ -75,7 +77,7 @@ public class TwiML implements ToXML {
 		buf.append("<Response>");
 		for ( TwiML t : nested ) {
 			if ( t == null ) {
-				logger.warning("skipping null nested item");
+				logger.warn("skipping null nested item");
 			} else {
 				t.toXml(buf, baseUrl);
 			}
