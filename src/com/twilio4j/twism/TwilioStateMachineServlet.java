@@ -19,6 +19,9 @@ import java.util.HashMap;
 
 import javax.servlet.ServletException;
 
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
+
 import com.twilio4j.twiml.Client;
 import com.twilio4j.twiml.Conference;
 import com.twilio4j.twiml.Dial;
@@ -111,7 +114,7 @@ public class NumberGameStateMachineServlet extends TwilioStateMachineServlet<Num
 abstract public class TwilioStateMachineServlet<E extends Enum<?>> extends TwilioStateMachineServletBase {
 	private static final long serialVersionUID = 1L;
 	
-//	final static private Logger logger = Logger.getLogger(TwilioStateMachineServlet.class.getSimpleName());
+//	final static private Logger logger = LoggerFactory.getLogger(TwilioStateMachineServlet.class);
 	
 	@Override
 	public String advanceState(String pathInfo, TwilioParameters tp) throws ServletException {
@@ -128,7 +131,7 @@ abstract public class TwilioStateMachineServlet<E extends Enum<?>> extends Twili
 		if ( handler != null ) {
 			TwiML twiml = handler.getTwiML(tp);
 			String className = twiml.getClass().getSimpleName();
-//			logger.info("className="+className);
+//			logger.debug("className="+className);
 			if ( !("TwiML".equals(className)) ) {
 				// if the root item is not a TwiML, but a Gather, or Say, or some subclass,
 				// wrap it in a TwiML so that our code can be uniform
@@ -196,7 +199,7 @@ abstract public class TwilioStateMachineServlet<E extends Enum<?>> extends Twili
 	 * <p>Then your normal (relative path) TwiML would all start with /ab/cd, which will
 	 * break because it *should* begin with /proxy/ab/cd.</p>
 	 * 
-	 * @return
+	 * @return by default, return an empty string. subclass can override.
 	 */
 	public String getBaseUrl() {
 		return "";

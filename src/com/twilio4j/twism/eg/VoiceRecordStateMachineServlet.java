@@ -15,7 +15,9 @@
  */
 package com.twilio4j.twism.eg;
 
-import java.util.logging.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.twilio4j.twiml.TwiML;
 import com.twilio4j.twism.RecordParameters;
@@ -28,7 +30,7 @@ import static com.twilio4j.twism.eg.VoiceRecordState.*;
 public class VoiceRecordStateMachineServlet extends TwilioStateMachineServlet<VoiceRecordState> {
 	private static final long serialVersionUID = 1L;
 	
-	final static private Logger logger = Logger.getLogger(VoiceRecordStateMachineServlet.class.getSimpleName());
+	final static private Logger logger = LoggerFactory.getLogger(VoiceRecordStateMachineServlet.class);
 
 	final static private String U_RECORDING_URL = "U_RECORDING_URL";
 	
