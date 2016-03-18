@@ -107,7 +107,6 @@ abstract public class TwilioStateMachineServletBase extends HttpServlet {
 				CookieTwism cookieOut = new CookieTwism(tp.getUserParams());
 				CookieTwism.setHttpCookie(resp, cookieOut, SECRET);
 				resp.setHeader("Cache-Control", "no-cache");
-				resp.getWriter().println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
 				resp.getWriter().println(twiml);
 			}
 			else {

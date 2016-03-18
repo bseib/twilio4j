@@ -73,16 +73,24 @@ public class TwiML implements ToXML {
 	 * Converts this object into XML. This function is normally called by the state
 	 * machine servlet and not called directly by you.
 	 */
+	@Override
 	public void toXml(StringBuilder buf, String baseUrl) {
-		buf.append("<Response>");
-		for ( TwiML t : nested ) {
-			if ( t == null ) {
-				logger.warn("skipping null nested item");
-			} else {
-				t.toXml(buf, baseUrl);
+		buf.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+		if ( nested.size() > 0 ) {
+			buf.append("<Response>");
+			for ( TwiML t : nested ) {
+				if ( t == null ) {
+					logger.warn("skipping null nested item");
+				}
+				else {
+					t.toXml(buf, baseUrl);
+				}
 			}
+			buf.append("</Response>");
 		}
-		buf.append("</Response>");
+		else {
+			buf.append("<Response/>");			
+		}
 	}
 	
 	protected String escape(String val) {
