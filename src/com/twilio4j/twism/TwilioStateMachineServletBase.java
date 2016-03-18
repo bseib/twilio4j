@@ -52,7 +52,7 @@ import org.slf4j.LoggerFactory;
  */
 abstract public class TwilioStateMachineServletBase extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
+
 	final static private Logger logger = LoggerFactory.getLogger(TwilioStateMachineServletBase.class);
 
 	@Override
@@ -110,7 +110,10 @@ abstract public class TwilioStateMachineServletBase extends HttpServlet {
 				resp.getWriter().println(twiml);
 			}
 			else {
-				resp.setStatus(HttpServletResponse.SC_OK);
+				resp.setContentType("text/xml");
+				resp.setHeader("Cache-Control", "no-cache");
+				resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
+				// resp.setStatus(HttpServletResponse.SC_OK);
 			}
 			resp.flushBuffer(); // twilio didn't receive all my document???
 		}
