@@ -1,3 +1,8 @@
+VERSION 1.0.12 - 2016031901
+  - for status callbacks with an empty body, strictly return status 204 and
+    do not set a Content-Type header since there is no body.
+  - for normal TwiML responses, set Cache-Control: no-store as well 
+
 VERSION 1.0.11 - 2016031802
   - for status callbacks with an empty body, return status 204 rather than 200 and still
     set a Content-Type header as text/xml even though it offers no use without a body.

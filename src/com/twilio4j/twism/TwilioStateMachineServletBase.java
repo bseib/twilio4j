@@ -107,11 +107,10 @@ abstract public class TwilioStateMachineServletBase extends HttpServlet {
 				CookieTwism cookieOut = new CookieTwism(tp.getUserParams());
 				CookieTwism.setHttpCookie(resp, cookieOut, SECRET);
 				resp.setHeader("Cache-Control", "no-cache");
+				resp.setHeader("Cache-Control", "no-store");
 				resp.getWriter().println(twiml);
 			}
 			else {
-				resp.setContentType("text/xml");
-				resp.setHeader("Cache-Control", "no-cache");
 				resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
 				// resp.setStatus(HttpServletResponse.SC_OK);
 			}
